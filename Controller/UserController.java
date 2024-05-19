@@ -29,7 +29,7 @@ public class UserController extends Controller{
             System.out.println("SQLException");
         }
 
-        String response = "User craated Successfully";
+        String response = "User created Successfully";
         exchange.sendResponseHeaders(200 , response.length());
 
         try (OutputStream outputStream = exchange.getResponseBody()){
