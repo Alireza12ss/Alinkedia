@@ -10,23 +10,22 @@ import java.sql.Statement;
 
 public class GetData extends DatabaseHandler {
     static String sql = "Select * From users ";
-    public static void getData(Connection connection) throws SQLException {
+    public static String getData(Connection connection) throws SQLException {
         try {
             Statement statement = connection.prepareStatement(sql);
 
             ResultSet set = statement.executeQuery(sql);
-            int index = 0 ;
+
             while (set.next()){
                 String str = set.getString(4);
-                System.out.println(str + "   hi");
-                index++;
+                return str;
+
             }
         }catch (SQLException e){
             e.printStackTrace();
         }
 
-        
 
-
+        return "";
     }
 }

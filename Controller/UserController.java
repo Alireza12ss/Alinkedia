@@ -12,12 +12,14 @@ import java.sql.SQLIntegrityConstraintViolationException;
 
 public class UserController extends Controller{
     public static void GetUser(HttpExchange exchange) throws IOException {
+        String str = null;
         try {
-            GetData.getData(DatabaseHandler.CreateConnection());
+            str = GetData.getData(DatabaseHandler.CreateConnection());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        String response = "here is all Users";
+        String response = "here is all Users : " ;
+        response = response.concat(str);
         exchange.sendResponseHeaders(200, response.length());
         try (OutputStream outputStream = exchange.getResponseBody()) {
             outputStream.write(response.getBytes());
