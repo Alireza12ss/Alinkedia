@@ -9,8 +9,9 @@ public class Education {
     private String Degree;
     private LocalDate StartOfEducation;
     private LocalDate EndOfEducation;
-    private double Grade;
+    private String Grade;
     private String DescriptionOfActivities;
     private String ProfileChanges;
+
 
 }

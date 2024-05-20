@@ -4,6 +4,23 @@ import java.util.ArrayList;
 
 public class User { // images hasn't been considered
     private String id;
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
     private String password;
     private String firstName;
     private String lastName;

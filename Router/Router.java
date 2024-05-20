@@ -10,7 +10,7 @@ public class Router {
     public static void route(Server server) {
 
         server.get("/users" , UserController::GetUser);
-        server.get("/home" , UserController::CreateUser);
+        server.get("/add" , UserController::CreateUser);
 
     }
 }
