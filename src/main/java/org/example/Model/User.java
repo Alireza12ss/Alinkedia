@@ -5,21 +5,14 @@ import java.util.ArrayList;
 public class User { // images hasn't been considered
     private String id;
 
-    public String getFirstName() {
-        return firstName;
+    public User( String firstName, String lastName, String additionalName , String email , String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.additionalName = additionalName;
+        this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
 
     private String password;
     private String firstName;
@@ -53,5 +46,15 @@ public class User { // images hasn't been considered
         this.city = city;
         this.profession = profession;
         this.connectionInfo = connectionInfo;
+    }
+
+    @Override
+    public String toString(){
+        return "\n " + firstName + "  " +
+                lastName + "\n"
+                +"additionalname : " + additionalName
+                + "\n email : " + email
+                + "\npassword : " + password
+                +"\n\n*********\n\n";
     }
 }
