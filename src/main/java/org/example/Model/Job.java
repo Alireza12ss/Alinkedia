@@ -1,7 +1,7 @@
 package org.example.Model;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 public class Job {
     private String title;

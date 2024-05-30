@@ -1,5 +1,6 @@
 package org.example.Handler;
 
+import com.auth0.jwt.JWT;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -24,6 +25,7 @@ public class UserHandler implements HttpHandler {
                     response = userController.GetAllUser();
                 }
                 else {
+                    System.out.println(JwtGenerator.decodeToken(response));
                     response = userController.GetUniqueUser(pathSplit[2]);
                     if (JwtGenerator.tokenIsValid(response)) {
                         Headers headers = exchange.getResponseHeaders();
@@ -44,8 +46,8 @@ public class UserHandler implements HttpHandler {
 
                     JSONObject jsonObject = new JSONObject(body.toString());
 
-                    response = userController.CreateUser((String) jsonObject.get("firstname")
-                            , (String)jsonObject.get("lastname") , (String)jsonObject.get("additionalname")
+                    response = userController.CreateUser((String) jsonObject.get("firstName")
+                            , (String)jsonObject.get("lastName") , (String)jsonObject.get("additionalName")
                             , (String)jsonObject.get("email") , (String)jsonObject.get("password"));
                 }
                 else {

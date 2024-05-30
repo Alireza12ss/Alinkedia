@@ -22,7 +22,8 @@ public class Server {
         InetAddress localAddress = InetAddress.getByName("127.0.0.1");
         this.server = HttpServer.create(new InetSocketAddress(localAddress, port), 0);
 
-        server.createContext("/users", new UserHandler());
+        server.createContext("/signup", new UserHandler());
+        server.createContext("/login", new UserHandler());
         server.createContext("/post" , new PostHandler());
 
         server.start();

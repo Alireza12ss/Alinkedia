@@ -30,7 +30,8 @@ public class UserDAO extends DatabaseHandler{
             }
             //check password
             if (DataCheck.CheckPass(pass)){
-                pstmt.setString(5 , pass);
+                String encryptPass = DataCheck.encrypt(pass);
+                pstmt.setString(5 , encryptPass);
             }else {
                 pstmt.close();
                 return "invalid pass\n" + pass +
@@ -47,6 +48,8 @@ public class UserDAO extends DatabaseHandler{
         }catch (SQLException e) {
             e.printStackTrace();
             return "Exception !";
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -86,11 +89,12 @@ public class UserDAO extends DatabaseHandler{
             ResultSet set = statement.executeQuery(sql);
 
             while (set.next()) {
+                String decryptedPass = DataCheck.encrypt(set.getString("password"));
                 User user = new User(set.getString("firstname") ,
                         set.getString("lastname") ,
                         set.getString("additionalname") ,
                         set.getString("email") ,
-                        set.getString("password"));
+                        decryptedPass);
 
                 users.add(user);
             }
@@ -99,6 +103,8 @@ public class UserDAO extends DatabaseHandler{
         }catch (SQLException e){
             e.printStackTrace();
             return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -111,25 +117,25 @@ public class UserDAO extends DatabaseHandler{
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1 , email);
             ResultSet set = statement.executeQuery();
-
+            User user = null;
             while (set.next()) {
-                User user = new User(set.getString("firstName"),
+                String decryptedPass = DataCheck.decrypt(set.getString("password"));
+                user = new User(set.getString("firstName"),
                         set.getString("lastName"),
                         set.getString("additionalName"),
                         set.getString("email"),
-                        set.getString("password"));
+                        decryptedPass);
                 break;
             }
             HashMap<String, Object> claims = new HashMap<>();
-
-
+            
             claims.put("email", email);
 
             JwtGenerator generator = new JwtGenerator();
 
             String token = generator.createToken(claims , 60);
 
-            return token;
+            return  token;
         }catch (SQLException e){
             e.printStackTrace();
             return null;
