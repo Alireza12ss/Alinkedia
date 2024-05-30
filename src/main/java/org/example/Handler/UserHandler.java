@@ -1,6 +1,5 @@
 package org.example.Handler;
 
-import com.auth0.jwt.JWT;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -9,6 +8,7 @@ import org.example.JWTgenerator.JwtGenerator;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.sql.SQLException;
 
 
 public class UserHandler implements HttpHandler {
@@ -51,6 +51,24 @@ public class UserHandler implements HttpHandler {
                         , (String)jsonObject.get("lastName") , (String)jsonObject.get("email")
                         , (String)jsonObject.get("password"));
                 break;
+            case "PATCH" :
+                //get json
+
+                break;
+            case "DELETE":
+                if (pathSplit.length == 2) {
+                    userController.deleteAllUsers();
+                    response = "All users deleted";
+                } else {
+                    // Extract the user ID from the path
+                    String userId = pathSplit[pathSplit.length - 1];
+                    userController.deleteUser(userId);
+                    response = "user deleted";
+                }
+                break;
+            default:
+                break;
+
         }
         exchange.sendResponseHeaders(200, response.length());
         try (OutputStream outputStream = exchange.getResponseBody()) {

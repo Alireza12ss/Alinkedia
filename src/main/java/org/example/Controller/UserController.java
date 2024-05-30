@@ -31,9 +31,9 @@ public class UserController extends Controller{
         return str;
     }
 
-    public String CreateUser(String firstName , String lastName , String additionalName , String email , String pass) {
+    public String CreateUser(String firstName , String lastName , String email , String pass) {
         try {
-            return UserDAO.signUp(firstName , lastName , additionalName , email , pass);
+            return UserDAO.signUp(firstName , lastName , email , pass);
         }catch (SQLIntegrityConstraintViolationException e){
             return "SQLIntegrityConstraintViolationException";
         }catch (SQLException e){
@@ -42,5 +42,11 @@ public class UserController extends Controller{
     }
 
 
+    public String deleteUser(String userId) {
+        return UserDAO.deleteUser();
+    }
 
+    public String deleteAllUsers() {
+        return UserDAO.deleteAllUsers();
+    }
 }
