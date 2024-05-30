@@ -9,18 +9,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserDAO extends DatabaseHandler{
-    public static String signUp( String firstName , String lastName , String additionalName , String email , String pass) throws SQLException {
+    public static String signUp( String firstName , String lastName ,  String email , String pass) throws SQLException {
         try {
             Connection connection = DatabaseHandler.CreateConnection();
 
-            String sql = "INSERT INTO users (firstName , lastName , additionalName , email , password) VALUES (? , ? , ? , ? , ?) ";
+            String sql = "INSERT INTO users (firstName , lastName , email , password) VALUES (? , ? , ? , ?) ";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
 
 
             pstmt.setString(1 , firstName);
             pstmt.setString(2 , lastName);
-            pstmt.setString(3 , additionalName);
             //check email
             if (DataCheck.CheckEmail(email)){
                 pstmt.setString(4 , email);
@@ -92,7 +91,6 @@ public class UserDAO extends DatabaseHandler{
                 String decryptedPass = DataCheck.encrypt(set.getString("password"));
                 User user = new User(set.getString("firstname") ,
                         set.getString("lastname") ,
-                        set.getString("additionalname") ,
                         set.getString("email") ,
                         decryptedPass);
 
@@ -122,7 +120,6 @@ public class UserDAO extends DatabaseHandler{
                 String decryptedPass = DataCheck.decrypt(set.getString("password"));
                 user = new User(set.getString("firstName"),
                         set.getString("lastName"),
-                        set.getString("additionalName"),
                         set.getString("email"),
                         decryptedPass);
                 break;
@@ -143,5 +140,45 @@ public class UserDAO extends DatabaseHandler{
             throw new RuntimeException(e);
         }
 
+    }
+
+    public static String deleteAllUsers() {
+        String sql = "delete From users";
+        try {
+            ArrayList<User> users = new ArrayList<>();
+
+            Connection connection = DatabaseHandler.CreateConnection();
+
+            Statement statement = connection.prepareStatement(sql);
+
+            statement.executeQuery(sql);
+
+            return "All users deleted";
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String deleteUser(String email) {
+        String sql = "delete From users where email = ?";
+        try {
+            ArrayList<User> users = new ArrayList<>();
+
+            Connection connection = DatabaseHandler.CreateConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1 , email);
+            statement.executeQuery(sql);
+
+            return "user removed";
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
