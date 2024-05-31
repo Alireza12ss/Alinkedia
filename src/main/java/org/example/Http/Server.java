@@ -35,10 +35,18 @@ public class Server {
         server.start();
     }
 
+    /**
+     * @return server
+     */
     public static HttpServer getServer() {
         return server;
     }
 
+    /**
+     * if the request be GET, it calls handle method of HttpHandler with exchange
+     * @param path string of path
+     * @param handler a HttpHandler object
+     */
     public void get(String path,HttpHandler handler) {
         server.createContext(path, (exchange) -> {
             if (exchange.getRequestMethod().equals("GET")) {
@@ -49,6 +57,11 @@ public class Server {
         });
     }
 
+    /**
+     * if the request be POST, it calls handle method of HttpHandler with exchange
+     * @param path string of path
+     * @param handler a HttpHandler object
+     */
     public void post(String path,HttpHandler handler) {
         server.createContext(path, (exchange) -> {
             if (exchange.getRequestMethod().equals("POST")) {
