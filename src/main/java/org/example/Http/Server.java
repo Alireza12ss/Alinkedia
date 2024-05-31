@@ -18,6 +18,12 @@ public class Server {
         createServer(port);
     }
 
+
+    /**
+     * create server on the localhost IP and entered port number
+     * @param port
+     * @throws IOException
+     */
     private void createServer(int port) throws IOException {
         InetAddress localAddress = InetAddress.getByName("127.0.0.1");
         this.server = HttpServer.create(new InetSocketAddress(localAddress, port), 0);
