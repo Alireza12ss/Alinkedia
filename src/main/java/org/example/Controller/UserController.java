@@ -21,10 +21,10 @@ public class UserController extends Controller{
 
     }
 
-    public String GetUniqueUser(String email)  {
+    public String login(String email)  {
         String str;
         try {
-            str = UserDAO.getUniqueUser(email);
+            str = UserDAO.login(email);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -42,11 +42,4 @@ public class UserController extends Controller{
     }
 
 
-    public String deleteUser(String userId) {
-        return UserDAO.deleteUser();
-    }
-
-    public String deleteAllUsers() {
-        return UserDAO.deleteAllUsers();
-    }
 }
