@@ -5,14 +5,25 @@ import java.util.ArrayList;
 public class User { // images hasn't been considered
     private String id;
 
-    public User( String firstName, String lastName, String additionalName , String email , String password) {
+    public User( String firstName, String lastName,  String email , String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
-        this.additionalName = additionalName;
         this.email = email;
     }
 
+    public User( String firstName, String lastName, String additionalName, String title, String imagePathProfile,
+                String imagePathBackground, String country, String city, String profession) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.additionalName = additionalName;
+        this.title = title;
+        this.imagePathProfile = imagePathProfile;
+        this.imagePathBackground = imagePathBackground;
+        this.country = country;
+        this.city = city;
+        this.profession = profession;
+    }
 
     private String password;
     private String firstName;
@@ -56,5 +67,15 @@ public class User { // images hasn't been considered
                 + "\n email : " + email
                 + "\npassword : " + password
                 +"\n\n*********\n\n";
+    }
+
+    public String showProfile(){
+        String profile = "\n" + firstName ;
+        if (additionalName != null){
+            profile = profile.concat(" (" + additionalName + ") ");
+        }
+        profile = profile.concat(lastName + "\n" + title
+                        + "\n" + country + ", " + city);
+        return profile;
     }
 }

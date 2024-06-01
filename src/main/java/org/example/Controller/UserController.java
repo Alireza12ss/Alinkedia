@@ -21,26 +21,25 @@ public class UserController extends Controller{
 
     }
 
-    public String GetUniqueUser(String email)  {
+    public String login(String email)  {
         String str;
         try {
-            str = UserDAO.getUniqueUser(email);
+            str = UserDAO.login(email);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return str;
     }
 
-    public String CreateUser(String firstName , String lastName , String additionalName , String email , String pass) {
+    public String CreateUser(String firstName , String lastName , String email , String pass) {
         try {
-            return UserDAO.signUp(firstName , lastName , additionalName , email , pass);
+            return UserDAO.signUp(firstName , lastName , email , pass);
         }catch (SQLIntegrityConstraintViolationException e){
             return "SQLIntegrityConstraintViolationException";
         }catch (SQLException e){
             return "SQLException";
         }
     }
-
 
 
 }

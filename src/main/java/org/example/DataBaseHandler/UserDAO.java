@@ -9,18 +9,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserDAO extends DatabaseHandler{
-    public static String signUp( String firstName , String lastName , String additionalName , String email , String pass) throws SQLException {
+    public static String signUp( String firstName , String lastName ,  String email , String pass) throws SQLException {
         try {
             Connection connection = DatabaseHandler.CreateConnection();
 
-            String sql = "INSERT INTO users (firstName , lastName , additionalName , email , password) VALUES (? , ? , ? , ? , ?) ";
+            String sql = "INSERT INTO users (firstName , lastName , email , password) VALUES (? , ? , ? , ?) ";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
 
 
             pstmt.setString(1 , firstName);
             pstmt.setString(2 , lastName);
-            pstmt.setString(3 , additionalName);
             //check email
             if (DataCheck.CheckEmail(email)){
                 pstmt.setString(4 , email);
@@ -31,7 +30,7 @@ public class UserDAO extends DatabaseHandler{
             //check password
             if (DataCheck.CheckPass(pass)){
                 String encryptPass = DataCheck.encrypt(pass);
-                pstmt.setString(5 , encryptPass);
+                pstmt.setString(4 , encryptPass);
             }else {
                 pstmt.close();
                 return "invalid pass\n" + pass +
@@ -54,27 +53,39 @@ public class UserDAO extends DatabaseHandler{
 
     }
 
-    public static String createPost( String userEmail , String txt) throws SQLException {
+    public static String showProfile(String email) throws SQLException {
+        User user = getUniqueUser(email);
+        return user.showProfile();
+    }
+
+    public String updateProfile(String email , String additionalName , String title , String imagePathProfile ,
+                                String imagePathBackground , String country , String city , String profession ){
+
+        String sql = "UPDATE users SET additionalName = ? , title = ? ,imagePathProfile = ?" +
+                " ,imagePathBackground = ? ,country = ? ,city = ? ,profession = ?  WHERE email = ?;";
+
         try {
             Connection connection = DatabaseHandler.CreateConnection();
 
-            String sql = "INSERT INTO posts (userEmail , txt ) VALUES (? , ?) ";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1,additionalName);
+            statement.setString(2,title);
+            statement.setString(3,imagePathProfile);
+            statement.setString(4,imagePathBackground);
+            statement.setString(5,country);
+            statement.setString(6,city);
+            statement.setString(7,profession);
+            statement.setString(8,email);
 
-            PreparedStatement pstmt = connection.prepareStatement(sql);
+            statement.executeQuery(sql);
 
-
-            pstmt.setString(1 , userEmail);
-            pstmt.setString(2 , txt);
-
-            pstmt.executeUpdate();
-
-            return "Post created";
-
-        } catch (SQLException e) {
+            return "User Updated";
+        }catch (SQLException e){
             e.printStackTrace();
-            return "Exception !";
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-
     }
 
     public static ArrayList<User> getAllUsers() throws SQLException {
@@ -92,7 +103,6 @@ public class UserDAO extends DatabaseHandler{
                 String decryptedPass = DataCheck.encrypt(set.getString("password"));
                 User user = new User(set.getString("firstname") ,
                         set.getString("lastname") ,
-                        set.getString("additionalname") ,
                         set.getString("email") ,
                         decryptedPass);
 
@@ -109,7 +119,7 @@ public class UserDAO extends DatabaseHandler{
 
     }
 
-    public static String  getUniqueUser(String email) throws SQLException {
+    public static String login(String email) throws SQLException {
         String sql = "Select * From users where email = ?";
 
         try {
@@ -117,25 +127,19 @@ public class UserDAO extends DatabaseHandler{
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1 , email);
             ResultSet set = statement.executeQuery();
-            User user = null;
-            while (set.next()) {
-                String decryptedPass = DataCheck.decrypt(set.getString("password"));
-                user = new User(set.getString("firstName"),
-                        set.getString("lastName"),
-                        set.getString("additionalName"),
-                        set.getString("email"),
-                        decryptedPass);
-                break;
+            if (set.next()) {
+                HashMap<String, Object> claims = new HashMap<>();
+
+                claims.put("email", email);
+
+                JwtGenerator generator = new JwtGenerator();
+
+                String token = generator.createToken(claims, 60);
+
+                return token;
+            }else {
+                return "User not found";
             }
-            HashMap<String, Object> claims = new HashMap<>();
-            
-            claims.put("email", email);
-
-            JwtGenerator generator = new JwtGenerator();
-
-            String token = generator.createToken(claims , 60);
-
-            return  token;
         }catch (SQLException e){
             e.printStackTrace();
             return null;
@@ -144,4 +148,76 @@ public class UserDAO extends DatabaseHandler{
         }
 
     }
+
+    public static User getUniqueUser(String email) throws SQLException {
+        String sql = "Select * From users where email = ?";
+
+        try {
+            Connection connection = DatabaseHandler.CreateConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1 , email);
+            ResultSet set = statement.executeQuery();
+            User user = null;
+            if (set.next()) {
+                user = new User(set.getString("firstName"),
+                        set.getString("lastName"),
+                        set.getString("additionalName"),
+                        set.getString("title"),
+                        set.getString("imagePathProfile"),
+                        set.getString("imagePathBackground"),
+                        set.getString("country"),
+                        set.getString("city"),
+                        set.getString("profession"));
+                return user;
+            }
+            return null;
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public static String deleteAllUsers() {
+        String sql = "delete From users";
+        try {
+            ArrayList<User> users = new ArrayList<>();
+
+            Connection connection = DatabaseHandler.CreateConnection();
+
+            Statement statement = connection.prepareStatement(sql);
+
+            statement.executeQuery(sql);
+
+            return "All users deleted";
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String deleteUser(String email) {
+        String sql = "delete From users where email = ?";
+        try {
+
+            Connection connection = DatabaseHandler.CreateConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1 , email);
+            statement.executeQuery(sql);
+
+            return "user removed";
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }
