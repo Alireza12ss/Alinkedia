@@ -72,9 +72,9 @@ public class User { // images hasn't been considered
     public String showProfile(){
         String profile = "\n" + firstName ;
         if (additionalName != null){
-            profile.concat(" (" + additionalName + ") ");
+            profile = profile.concat(" (" + additionalName + ") ");
         }
-        profile.concat(lastName + "\n" + title
+        profile = profile.concat(lastName + "\n" + title
                         + "\n" + country + ", " + city);
         return profile;
     }
