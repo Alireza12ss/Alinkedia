@@ -22,16 +22,7 @@ public class PostHandler implements HttpHandler {
                 break;
             case "POST" :
                 if (pathSplit.length == 2){
-                    InputStream requestBody = exchange.getRequestBody();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(requestBody));
-                    StringBuilder body = new StringBuilder();
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        body.append(line);
-                    }
-                    requestBody.close();
-
-                    JSONObject jsonObject = new JSONObject(body.toString());
+                    JSONObject jsonObject = ProfileHandler.createJsonObject(exchange);
 
                     response = postController.createPost((String) jsonObject.get("userEmail")
                             , (String)jsonObject.get("txt") );

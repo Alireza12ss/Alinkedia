@@ -21,6 +21,21 @@ public class ProfileController extends Controller{
 
     }
 
+    public static String showEducation(String email) throws SQLException {
+        return UserDAO.showEducation(email);
+    }
+
+    public static String addEducation(String email , String schoolName, String fieldOfStudy, Date startDate, Date endDate,
+                                      double grade, String activitiesAndSocieties, String descriptions) throws SQLException {
+        return UserDAO.addEducation(email , schoolName , fieldOfStudy, startDate,  endDate,grade,
+                activitiesAndSocieties,descriptions);
+
+    }
+
+    public static String showConnectionInfo(String email) {
+        return UserDAO.showConnectionInfo(email);
+    }
+
     public String updateProfile(String additionalName , String title , String imagePathProfile , String imagePathBackground , String country , String city , String profession ){
 
         return additionalName;
