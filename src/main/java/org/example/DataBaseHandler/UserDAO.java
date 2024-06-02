@@ -1,7 +1,10 @@
 package org.example.DataBaseHandler;
 
 import org.example.JWTgenerator.JwtGenerator;
+import org.example.Model.ConnectionInfo;
+import org.example.Model.Education;
 import org.example.Model.User;
+import org.jetbrains.annotations.Nullable;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
@@ -53,39 +56,42 @@ public class UserDAO extends DatabaseHandler{
 
     }
 
-    public static String showProfile(String email) throws SQLException {
-        User user = getUniqueUser(email);
-        return user.showProfile();
-    }
-
-    public static String showJob(String email) throws SQLException {
-        User user = getUniqueUser(email);
-        return JobDAO.getJob(user.getJobId()).toString();
-    }
-
-    public static String addJob(String email ,String title, String employmentType,  String companyName, String location,
-                                String locationType, boolean activity, Date startToWork, Date endToWork, String description) throws SQLException {
-        return JobDAO.addJob(email , title, employmentType,  companyName,location,
-                locationType,activity,  startToWork, endToWork, description);
-
-    }
-
-    public static void updateJobId(String email, int jobId){
-        String sql = "UPDATE users SET jobId = ? where email = ?";
+    public static String login(String email) throws SQLException {
+        String sql = "Select * From users where email = ?";
 
         try {
             Connection connection = DatabaseHandler.CreateConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1 , jobId);
-            statement.setString(2 , email);
-            statement.executeUpdate();
+            statement.setString(1 , email);
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                HashMap<String, Object> claims = new HashMap<>();
+
+                claims.put("email", email);
+
+                JwtGenerator generator = new JwtGenerator();
+
+                String token = generator.createToken(claims, 60);
+
+                return token;
+            }else {
+                return "User not found";
+            }
         }catch (SQLException e){
             e.printStackTrace();
+            return null;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
     }
 
+
+    //Profile
+    public static String showProfile(String email) throws SQLException {
+        User user = getUniqueUser(email);
+        return user.showProfile();
+    }
 
     public String updateProfile(String email , String additionalName , String title , String imagePathProfile ,
                                 String imagePathBackground , String country , String city , String profession ){
@@ -116,6 +122,94 @@ public class UserDAO extends DatabaseHandler{
             throw new RuntimeException(e);
         }
     }
+
+
+
+    //job
+    public static String showJob(String email) throws SQLException {
+        User user = getUniqueUser(email);
+        return JobDAO.getJob(user.getJobId()).toString();
+    }
+
+    public static String addJob(String email ,String title, String employmentType,  String companyName, String location,
+                                String locationType, boolean activity, Date startToWork, Date endToWork, String description) throws SQLException {
+        return JobDAO.addJob(email , title, employmentType,  companyName,location,
+                locationType,activity,  startToWork, endToWork, description);
+
+    }
+
+    public static void updateJobId(String email, int jobId){
+        String sql = "UPDATE users SET jobId = ? where email = ?";
+
+        try {
+            Connection connection = DatabaseHandler.CreateConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1 , jobId);
+            statement.setString(2 , email);
+            statement.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    //connectionInfo
+    public static String showConnectionInfo(String email) throws SQLException {
+        User user = getUniqueUser(email);
+        assert user != null;
+        return ConnectionInfoDAO.getConnectionInfo(user.getConnectionInfoId()).toString();
+    }
+
+    public static void updateConnectionInfoId(String email, int ConnectionInfo){
+        String sql = "UPDATE users SET ConnectionInfoId = ? where email = ?";
+
+        try {
+            Connection connection = DatabaseHandler.CreateConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1 , ConnectionInfo);
+            statement.setString(2 , email);
+            statement.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    //eduction
+    public static String showEducation(String email) throws SQLException {
+        User user = getUniqueUser(email);
+        assert user != null;
+        return EducationDAO.getEducation(user.getEducationId()).toString();
+    }
+
+    public static String addEducation(String email , String schoolName, String fieldOfStudy, Date startDate, Date endDate,
+                                      double grade, String activitiesAndSocieties, String descriptions) throws SQLException {
+        return EducationDAO.addEducation(email , schoolName , fieldOfStudy, startDate,  endDate,grade,
+                activitiesAndSocieties,descriptions);
+
+    }
+
+    public static void updateEducationId(String email, int EducationId){
+        String sql = "UPDATE users SET educationId = ? where email = ?";
+
+        try {
+            Connection connection = DatabaseHandler.CreateConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1 , EducationId);
+            statement.setString(2 , email);
+            statement.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 
     public static ArrayList<User> getAllUsers() throws SQLException {
         String sql = "Select * From users";
@@ -148,36 +242,6 @@ public class UserDAO extends DatabaseHandler{
 
     }
 
-    public static String login(String email) throws SQLException {
-        String sql = "Select * From users where email = ?";
-
-        try {
-            Connection connection = DatabaseHandler.CreateConnection();
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1 , email);
-            ResultSet set = statement.executeQuery();
-            if (set.next()) {
-                HashMap<String, Object> claims = new HashMap<>();
-
-                claims.put("email", email);
-
-                JwtGenerator generator = new JwtGenerator();
-
-                String token = generator.createToken(claims, 60);
-
-                return token;
-            }else {
-                return "User not found";
-            }
-        }catch (SQLException e){
-            e.printStackTrace();
-            return null;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
     public static User getUniqueUser(String email) throws SQLException {
         String sql = "Select * From users where email = ?";
 
@@ -193,6 +257,8 @@ public class UserDAO extends DatabaseHandler{
                         set.getString("additionalName"),
                         set.getString("title"),
                         set.getInt("jobId"),
+                        set.getInt("educationId"),
+                        set.getInt("connectionInfoId"),
                         set.getString("imagePathProfile"),
                         set.getString("imagePathBackground"),
                         set.getString("country"),
@@ -248,6 +314,7 @@ public class UserDAO extends DatabaseHandler{
             throw new RuntimeException(e);
         }
     }
+
 
 
 }
