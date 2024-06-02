@@ -9,6 +9,9 @@ public class ProfileController extends Controller{
         return UserDAO.showProfile(email);
     }
 
+    public static String showJob(String email) throws SQLException {
+        return UserDAO.showJob(email);
+    }
     public String updateProfile(String additionalName , String title , String imagePathProfile , String imagePathBackground , String country , String city , String profession ){
 
         return additionalName;

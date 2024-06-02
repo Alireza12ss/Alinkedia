@@ -26,10 +26,16 @@ public class ProfileHandler implements HttpHandler {
         String[] pathSplit = path.split("/");
         switch (method){
             case "GET" :
-                if (pathSplit.length == 2){
                     Map<String, Object> decoded = decodeToken(exchange.getRequestHeaders().getFirst("Authorization"));
+                if (pathSplit.length == 2){
                     try {
                         response = ProfileController.showProfile(decoded.get("email").toString());
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }else if (pathSplit[2].equals("job")){
+                    try {
+                        response = ProfileController.showJob(decoded.get("email").toString());
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
