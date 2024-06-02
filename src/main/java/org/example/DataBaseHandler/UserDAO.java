@@ -58,6 +58,35 @@ public class UserDAO extends DatabaseHandler{
         return user.showProfile();
     }
 
+    public static String showJob(String email) throws SQLException {
+        User user = getUniqueUser(email);
+        return JobDAO.getJob(user.getJobId()).toString();
+    }
+
+    public static String addJob(String email ,String title, String employmentType,  String companyName, String location,
+                                String locationType, boolean activity, Date startToWork, Date endToWork, String description) throws SQLException {
+        return JobDAO.addJob(email , title, employmentType,  companyName,location,
+                locationType,activity,  startToWork, endToWork, description);
+
+    }
+
+    public static void updateJobId(String email, int jobId){
+        String sql = "UPDATE users SET jobId = ? where email = ?";
+
+        try {
+            Connection connection = DatabaseHandler.CreateConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1 , jobId);
+            statement.setString(2 , email);
+            statement.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     public String updateProfile(String email , String additionalName , String title , String imagePathProfile ,
                                 String imagePathBackground , String country , String city , String profession ){
 
@@ -163,6 +192,7 @@ public class UserDAO extends DatabaseHandler{
                         set.getString("lastName"),
                         set.getString("additionalName"),
                         set.getString("title"),
+                        set.getInt("jobId"),
                         set.getString("imagePathProfile"),
                         set.getString("imagePathBackground"),
                         set.getString("country"),
