@@ -131,13 +131,6 @@ public class UserDAO extends DatabaseHandler{
         return JobDAO.getJob(user.getJobId()).toString();
     }
 
-    public static String addJob(String email ,String title, String employmentType,  String companyName, String location,
-                                String locationType, boolean activity, Date startToWork, Date endToWork, String description) throws SQLException {
-        return JobDAO.addJob(email , title, employmentType,  companyName,location,
-                locationType,activity,  startToWork, endToWork, description);
-
-    }
-
     public static void updateJobId(String email, int jobId){
         String sql = "UPDATE users SET jobId = ? where email = ?";
 
@@ -186,13 +179,6 @@ public class UserDAO extends DatabaseHandler{
         return EducationDAO.getEducation(user.getEducationId()).toString();
     }
 
-    public static String addEducation(String email , String schoolName, String fieldOfStudy, Date startDate, Date endDate,
-                                      double grade, String activitiesAndSocieties, String descriptions) throws SQLException {
-        return EducationDAO.addEducation(email , schoolName , fieldOfStudy, startDate,  endDate,grade,
-                activitiesAndSocieties,descriptions);
-
-    }
-
     public static void updateEducationId(String email, int EducationId){
         String sql = "UPDATE users SET educationId = ? where email = ?";
 
@@ -208,6 +194,45 @@ public class UserDAO extends DatabaseHandler{
             throw new RuntimeException(e);
         }
     }
+
+
+
+    //search
+    public static ArrayList<User> searchUsers(String firstName , String lastName) throws SQLException {
+        String first = "%".concat(firstName);
+        String last = "%".concat(lastName);
+        String sql = "Select * From users WHERE firstName LIKE ? or lastName LIKE ?";
+        try {
+            ArrayList<User> users = new ArrayList<>();
+
+            Connection connection = DatabaseHandler.CreateConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1 , first.concat("%"));
+            statement.setString(2 , last.concat("%"));
+            ResultSet set = statement.executeQuery();
+
+            while (set.next()) {
+                String decryptedPass = DataCheck.encrypt(set.getString("password"));
+                User user = new User(set.getString("firstname") ,
+                        set.getString("lastname") ,
+                        set.getString("email") ,
+                        decryptedPass);
+
+                users.add(user);
+            }
+
+            return users;
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
 
 
 
