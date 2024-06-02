@@ -34,20 +34,27 @@ public class ProfileHandler implements HttpHandler {
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                }else if (pathSplit[2].equals("job")){
+                }
+                else if (pathSplit[2].equals("job")){
                     try {
                         response = ProfileController.showJob(decoded.get("email").toString());
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                }else if (pathSplit[2].equals("education")) {
+                }
+                else if (pathSplit[2].equals("education")) {
                     try {
                         response = ProfileController.showEducation(decoded.get("email").toString());
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-                }else if (pathSplit[2].equals("connectionInfo")) {
-                    response = ProfileController.showConnectionInfo(decoded.get("email").toString());
+                }
+                else if (pathSplit[2].equals("connectionInfo")) {
+                    try {
+                        response = ProfileController.showConnectionInfo(decoded.get("email").toString());
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 break;
             case "POST" :
@@ -70,6 +77,17 @@ public class ProfileHandler implements HttpHandler {
                                 , jsonObject.getString("fieldOfStudy") , Date.valueOf(jsonObject.getString("startDate")),
                                 Date.valueOf(jsonObject.getString("endDate")), jsonObject.getDouble("grade"), jsonObject.getString("activitiesAndSocieties"),
                                 jsonObject.getString("description"));
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }else if (pathSplit[2].equals("connectionInfo")) {
+                    // get json
+                    JSONObject jsonObject = createJsonObject(exchange);
+                    try {
+                        response = ProfileController.addConnectionInfo(decoded.get("email").toString() ,jsonObject.getString("userLink")
+                                , jsonObject.getString("email") , jsonObject.getString("phoneNumber"),
+                                jsonObject.getString("phoneType"), jsonObject.getString("address"), Date.valueOf(jsonObject.getString("birthday")),
+                                jsonObject.getString("birthdayAccess") , jsonObject.getString("otherWay"));
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
