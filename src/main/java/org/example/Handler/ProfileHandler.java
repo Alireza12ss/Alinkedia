@@ -40,26 +40,36 @@ public class ProfileHandler implements HttpHandler {
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
+                }else if (pathSplit[2].equals("education")) {
+                    try {
+                        response = ProfileController.showEducation(decoded.get("email").toString());
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }else if (pathSplit[2].equals("connectionInfo")) {
+                    response = ProfileController.showConnectionInfo(decoded.get("email").toString());
                 }
                 break;
             case "POST" :
                 if (pathSplit[2].equals("job")) {
                     // get json
-                    InputStream requestBody = exchange.getRequestBody();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(requestBody));
-                    StringBuilder body = new StringBuilder();
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        body.append(line);
-                    }
-                    requestBody.close();
-
-                    JSONObject jsonObject = new JSONObject(body.toString());
+                    JSONObject jsonObject = createJsonObject(exchange);
                     try {
                         response = ProfileController.addJob(decoded.get("email").toString() ,jsonObject.getString("title"), jsonObject.getString("employmentType"), jsonObject.getString("companyName"),
                                 jsonObject.getString("location"), jsonObject.getString("locationType")
                                 , jsonObject.getBoolean("activity"), Date.valueOf(jsonObject.getString("startToWork")),
                                 Date.valueOf(jsonObject.getString("endToWork")), jsonObject.getString("description"));
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }else if (pathSplit[2].equals("education")) {
+                    // get json
+                    JSONObject jsonObject = createJsonObject(exchange);
+                    try {
+                        response = ProfileController.addEducation(decoded.get("email").toString() ,jsonObject.getString("schoolName")
+                                , jsonObject.getString("fieldOfStudy") , Date.valueOf(jsonObject.getString("startDate")),
+                                Date.valueOf(jsonObject.getString("endDate")), jsonObject.getDouble("grade"), jsonObject.getString("activitiesAndSocieties"),
+                                jsonObject.getString("description"));
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
@@ -74,6 +84,20 @@ public class ProfileHandler implements HttpHandler {
         } catch (IOException e) {
             System.out.println("IOException");
         }
+    }
+
+    static JSONObject createJsonObject(HttpExchange exchange) throws IOException {
+        InputStream requestBody = exchange.getRequestBody();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(requestBody));
+        StringBuilder body = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            body.append(line);
+        }
+        requestBody.close();
+
+        JSONObject jsonObject = new JSONObject(body.toString());
+        return jsonObject;
     }
 
 }
