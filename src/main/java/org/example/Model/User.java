@@ -12,12 +12,14 @@ public class User { // images hasn't been considered
         this.email = email;
     }
 
-    public User( String firstName, String lastName, String additionalName, String title, String imagePathProfile,
+    public User( String firstName, String lastName, String additionalName, String title, int jobId , int educationId , String imagePathProfile,
                 String imagePathBackground, String country, String city, String profession) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.additionalName = additionalName;
         this.title = title;
+        this.jobId = jobId;
+        this.educationId = educationId;
         this.imagePathProfile = imagePathProfile;
         this.imagePathBackground = imagePathBackground;
         this.country = country;
@@ -25,39 +27,40 @@ public class User { // images hasn't been considered
         this.profession = profession;
     }
 
+
     private String password;
     private String firstName;
     private String lastName;
     private String additionalName;
     private String email;
+
+    public int getEducationId() {
+        return educationId;
+    }
+
+    public int getConnectionInfoId() {
+        return connectionInfoId;
+    }
+
     private String title;
     private String imagePathProfile;
     private String imagePathBackground;
-    private Job job;
-    private Education education;
+    private int jobId;
+    private int educationId;
+    private int connectionInfoId;
     private String country;
     private String city;
     private String profession;
-    private ConnectionInfo connectionInfo;
-    // + opentowork or hiring or ...
+    // + open to work or hiring or ...
     private ArrayList<Job> experience;
     private ArrayList<Education> studies;
     private ArrayList<Skill> skills;
 
-    public User(String id, String password, String firstName, String lastName, String additionalName, String title, Job job, Education education, String country, String city, String profession, ConnectionInfo connectionInfo) {
-        this.id = id;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.additionalName = additionalName;
-        this.title = title;
-        this.job = job;
-        this.education = education;
-        this.country = country;
-        this.city = city;
-        this.profession = profession;
-        this.connectionInfo = connectionInfo;
+
+    public int getJobId() {
+        return jobId;
     }
+
 
     @Override
     public String toString(){
