@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import java.io.*;
 import java.net.http.HttpHeaders;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Map;
 
@@ -24,9 +25,9 @@ public class ProfileHandler implements HttpHandler {
         String path = exchange.getRequestURI().getPath();
         String response = "";
         String[] pathSplit = path.split("/");
+        Map<String, Object> decoded = decodeToken(exchange.getRequestHeaders().getFirst("Authorization"));
         switch (method){
             case "GET" :
-                    Map<String, Object> decoded = decodeToken(exchange.getRequestHeaders().getFirst("Authorization"));
                 if (pathSplit.length == 2){
                     try {
                         response = ProfileController.showProfile(decoded.get("email").toString());
@@ -36,6 +37,29 @@ public class ProfileHandler implements HttpHandler {
                 }else if (pathSplit[2].equals("job")){
                     try {
                         response = ProfileController.showJob(decoded.get("email").toString());
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                break;
+            case "POST" :
+                if (pathSplit[2].equals("job")) {
+                    // get json
+                    InputStream requestBody = exchange.getRequestBody();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(requestBody));
+                    StringBuilder body = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        body.append(line);
+                    }
+                    requestBody.close();
+
+                    JSONObject jsonObject = new JSONObject(body.toString());
+                    try {
+                        response = ProfileController.addJob(decoded.get("email").toString() ,jsonObject.getString("title"), jsonObject.getString("employmentType"), jsonObject.getString("companyName"),
+                                jsonObject.getString("location"), jsonObject.getString("locationType")
+                                , jsonObject.getBoolean("activity"), Date.valueOf(jsonObject.getString("startToWork")),
+                                Date.valueOf(jsonObject.getString("endToWork")), jsonObject.getString("description"));
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
