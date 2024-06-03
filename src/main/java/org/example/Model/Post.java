@@ -1,27 +1,24 @@
 package org.example.Model;
 
 public class Post {
-    String userEmail;
-    String txt;
+    int userId;
+    String text;
 
-    public Post(String userEmail, String txt) {
-        this.userEmail = userEmail;
-        this.txt = txt;
+    public Post(int userId, String text) {
+        this.userId = userId;
+        this.text = text;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public String getText() {
+        return text;
     }
 
-    public String getTxt() {
-        return txt;
-    }
-
-    public void setTxt(String txt) {
-        this.txt = txt;
+    @Override
+    public String toString() {
+        return "\n" + userId + "\nText : " + text + "\n-------------\n";
     }
 }
