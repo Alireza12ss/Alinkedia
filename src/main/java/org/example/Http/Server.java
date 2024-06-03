@@ -1,9 +1,7 @@
 package org.example.Http;
 
 import com.sun.net.httpserver.HttpServer;
-import org.example.Handler.PostHandler;
-import org.example.Handler.ProfileHandler;
-import org.example.Handler.UserHandler;
+import org.example.Handler.*;
 
 
 import java.io.IOException;
@@ -30,6 +28,7 @@ public class Server {
             server.createContext("/profile", new ProfileHandler());
             server.createContext("/post" , new PostHandler());
             server.createContext("/follow" , new FollowHandler());
+            server.createContext("/connect" , new ConnectionHandler());
         }catch (IOException e){
 
         }
