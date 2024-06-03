@@ -7,6 +7,9 @@ import org.example.Controller.UserController;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.util.Map;
+
+import static org.example.JWTgenerator.JwtGenerator.decodeToken;
 
 public class PostHandler implements HttpHandler {
 
@@ -17,15 +20,16 @@ public class PostHandler implements HttpHandler {
         String path = exchange.getRequestURI().getPath();
         String response = "";
         String[] pathSplit = path.split("/");
+        Map<String, Object> decoded = decodeToken(exchange.getRequestHeaders().getFirst("Authorization"));
+        String Email = decoded.get("email").toString();
         switch (method){
             case "GET" :
+                response = postController.getPosts(Email);
                 break;
             case "POST" :
                 if (pathSplit.length == 2){
                     JSONObject jsonObject = ProfileHandler.createJsonObject(exchange);
-
-                    response = postController.createPost((String) jsonObject.get("userEmail")
-                            , (String)jsonObject.get("txt") );
+                    response = postController.createPost(Email , jsonObject.getString("text"));
                 }
                 break;
 
