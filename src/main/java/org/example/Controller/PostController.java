@@ -20,4 +20,8 @@ public class PostController extends Controller{
     public String getPosts(String email) {
         return PostDAO.getPosts(email).toString();
     }
+
+    public String getPost(int postId){
+        return PostDAO.getPost(postId).toString();
+    }
 }

@@ -1,6 +1,8 @@
 package org.example.Controller;
 
 import org.example.DataBaseHandler.ConnectionInfoDAO;
+import org.example.DataBaseHandler.EducationDAO;
+import org.example.DataBaseHandler.JobDAO;
 import org.example.DataBaseHandler.UserDAO;
 
 import java.sql.Date;
@@ -19,7 +21,7 @@ public class ProfileController extends Controller{
 
     public static String addJob(String email ,String title, String employmentType, String companyName, String location,
                                 String locationType, boolean activity, Date startToWork, Date endToWork, String description) throws SQLException {
-        return UserDAO.addJob(email ,title, employmentType,  companyName,location,
+        return JobDAO.addJob(email ,title, employmentType,  companyName,location,
                 locationType,activity,  startToWork, endToWork, description);
 
     }
@@ -32,7 +34,7 @@ public class ProfileController extends Controller{
 
     public static String addEducation(String email , String schoolName, String fieldOfStudy, Date startDate, Date endDate,
                                       double grade, String activitiesAndSocieties, String descriptions) throws SQLException {
-        return UserDAO.addEducation(email , schoolName , fieldOfStudy, startDate,  endDate,grade,
+        return EducationDAO.addEducation(email , schoolName , fieldOfStudy, startDate,  endDate,grade,
                 activitiesAndSocieties,descriptions);
 
     }
@@ -49,6 +51,10 @@ public class ProfileController extends Controller{
                 birthday,birthdayAccess , otherWay);
 
     }
+
+
+
+
 
     public String updateProfile(String additionalName , String title , String imagePathProfile , String imagePathBackground , String country , String city , String profession ){
 

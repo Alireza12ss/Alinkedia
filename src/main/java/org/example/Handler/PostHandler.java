@@ -24,7 +24,11 @@ public class PostHandler implements HttpHandler {
         String Email = decoded.get("email").toString();
         switch (method){
             case "GET" :
-                response = postController.getPosts(Email);
+                if (pathSplit.length == 2) {
+                    response = postController.getPosts(Email);
+                }else if (pathSplit.length == 3){
+                    response = postController.getPost(Integer.valueOf(pathSplit[2]));
+                }
                 break;
             case "POST" :
                 if (pathSplit.length == 2){
