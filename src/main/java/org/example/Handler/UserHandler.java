@@ -26,7 +26,7 @@ public class UserHandler implements HttpHandler {
                 }
                 else if(pathSplit[1].equals("login")){ //url : /email/password
 //                    System.out.println(JwtGenerator.decodeToken(response));
-                    response = userController.login(pathSplit[2]);
+                    response = userController.login(pathSplit[2] , pathSplit[3]);
                     if (JwtGenerator.tokenIsValid(response)) {
                         Headers headers = exchange.getResponseHeaders();
                         headers.set("Authorization", "Bearer " + response);
@@ -40,35 +40,25 @@ public class UserHandler implements HttpHandler {
                 }
                 break;
             case "POST" :
-                // get json
-                InputStream requestBody = exchange.getRequestBody();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(requestBody));
-                StringBuilder body = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    body.append(line);
-                }
-                requestBody.close();
-
-                JSONObject jsonObject = new JSONObject(body.toString());
+                JSONObject jsonObject = createJsonObject(exchange);
 
                 response = userController.CreateUser((String) jsonObject.get("firstName")
                         , (String)jsonObject.get("lastName") , (String)jsonObject.get("email")
                         , (String)jsonObject.get("password"));
                 break;
-            case "PATCH" :
-                //get json
-                InputStream requestBodyp = exchange.getRequestBody();
-                BufferedReader readerp = new BufferedReader(new InputStreamReader(requestBodyp));
-                StringBuilder bodyp = new StringBuilder();
-                String linep;
-                while ((linep = readerp.readLine()) != null) {
-                    bodyp.append(linep);
-                }
-                requestBodyp.close();
-
-                JSONObject jsonObjectp = new JSONObject(bodyp.toString());
-                break;
+//            case "PATCH" :
+//                //get json
+//                InputStream requestBodyp = exchange.getRequestBody();
+//                BufferedReader readerp = new BufferedReader(new InputStreamReader(requestBodyp));
+//                StringBuilder bodyp = new StringBuilder();
+//                String linep;
+//                while ((linep = readerp.readLine()) != null) {
+//                    bodyp.append(linep);
+//                }
+//                requestBodyp.close();
+//
+//                JSONObject jsonObjectp = new JSONObject(bodyp.toString());
+//                break;
 //            case "DELETE":
 //                if (pathSplit.length == 2) {
 //                    userController.deleteAllUsers();
@@ -90,6 +80,19 @@ public class UserHandler implements HttpHandler {
             System.out.println("IOException");
         }
 
+    }
+    static JSONObject createJsonObject(HttpExchange exchange) throws IOException {
+        InputStream requestBody = exchange.getRequestBody();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(requestBody));
+        StringBuilder body = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            body.append(line);
+        }
+        requestBody.close();
+
+        JSONObject jsonObject = new JSONObject(body.toString());
+        return jsonObject;
     }
 }
 
