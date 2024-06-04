@@ -1,21 +1,13 @@
 package org.example.DataBaseHandler;
 
-import org.jasypt.util.password.StrongPasswordEncryptor;
+
 
 import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.UnsupportedEncodingException;
-import java.security.AlgorithmParameters;
-import java.security.GeneralSecurityException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
+import java.sql.SQLException;
 import java.util.Base64;
-import java.util.regex.Matcher;
+import java.sql.*;
 import java.util.regex.Pattern;
 
 public class DataCheck {
@@ -36,6 +28,28 @@ public class DataCheck {
             return true;
         }
         return false;
+    }
+
+    public static boolean uniqueEmail(String email){
+        try {
+            Connection connection = DAO.CreateConnection();
+
+            String sql = "select * from users where email = ?";
+
+            PreparedStatement stmt = connection.prepareStatement(sql);
+
+
+            stmt.setString(1 , email);
+
+            ResultSet set = stmt.executeQuery();
+            if (set.next()){
+                return false;
+            }
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public static boolean isValidPassword(String password)
