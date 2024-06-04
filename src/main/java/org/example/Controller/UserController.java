@@ -21,10 +21,10 @@ public class UserController extends Controller{
 
     }
 
-    public String login(String email)  {
+    public String login(String email , String pass)  {
         String str;
         try {
-            str = UserDAO.login(email);
+            str = UserDAO.login(email , pass);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
