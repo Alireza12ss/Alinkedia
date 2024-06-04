@@ -9,7 +9,7 @@ public class EducationDAO {
         String sql = "Select * From educations where id = ?";
 
         try {
-            Connection connection = DatabaseHandler.CreateConnection();
+            Connection connection = DAO.CreateConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , educationId);
             ResultSet set = statement.executeQuery();
@@ -35,7 +35,7 @@ public class EducationDAO {
 
     public static String addEducation(String email , String schoolName, String fieldOfStudy, Date startDate, Date endDate,
                                 double grade, String activitiesAndSocieties, String descriptions) throws SQLException {
-        Connection connection = DatabaseHandler.CreateConnection();
+        Connection connection = DAO.CreateConnection();
 
         String sql = "INSERT INTO educations (schoolName , fieldOfStudy, startDate,  endDate,grade,\n" +
                 "                activitiesAndSocieties,descriptions) VALUES (? , ? , ? , ? , ? ,? , ?) ";
@@ -60,7 +60,7 @@ public class EducationDAO {
         String sql = "Select * From educations where schoolName = ? AND fieldOfStudy = ?";
 
         try {
-            Connection connection = DatabaseHandler.CreateConnection();
+            Connection connection = DAO.CreateConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1 , schoolName);
             statement.setString(2 , fieldOfStudy);

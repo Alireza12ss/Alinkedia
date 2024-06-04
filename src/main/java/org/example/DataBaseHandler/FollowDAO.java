@@ -7,13 +7,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
+
+import static org.example.DataBaseHandler.DAO.personEmail;
+import static org.example.DataBaseHandler.DAO.personId;
 
 public class FollowDAO {
 
     public static String follow(String followerEmail, String followingEmail) {
-        String sql = "INSERT INTO follow (followerId , followingId) values (? , ?)";
+        String sql = "INSERT INTO follows (followerId , followingId) values (? , ?)";
         try {
-            Connection connection = DatabaseHandler.CreateConnection();
+            Connection connection = DAO.CreateConnection();
 
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , personId(followerEmail));
@@ -29,53 +33,11 @@ public class FollowDAO {
         }
     }
 
-    private static int personId(String email){
-        String sql = "Select * From users WHERE email = ?";
-        try {
-            Connection connection = DatabaseHandler.CreateConnection();
-
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1 , email);
-            ResultSet set = statement.executeQuery();
-
-            while (set.next()) {
-                return set.getInt("id");
-            }
-            return 0;
-        }catch (SQLException e){
-            e.printStackTrace();
-            return 0;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static String personEmail(int id){
-        String sql = "Select * From users WHERE id = ?";
-        try {
-            Connection connection = DatabaseHandler.CreateConnection();
-
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1 , id);
-            ResultSet set = statement.executeQuery();
-
-            while (set.next()) {
-                return set.getString("email");
-            }
-            return null;
-        }catch (SQLException e){
-            e.printStackTrace();
-            return null;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public static ArrayList<User> getFollowers(String email) {
-        String sql = "SELECT * FROM follow WHERE followingId = ?";
+        String sql = "SELECT * FROM follows WHERE followingId = ?";
         try {
             ArrayList<User> users = new ArrayList<>();
-            Connection connection = DatabaseHandler.CreateConnection();
+            Connection connection = DAO.CreateConnection();
 
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , personId(email));
@@ -93,11 +55,11 @@ public class FollowDAO {
         }
     }
 
-    public static ArrayList<User> getFollowing(String email) {
-        String sql = "SELECT * FROM follow WHERE followerId = ?";
+    public static HashSet<User> getFollowing(String email) {
+        String sql = "SELECT * FROM follows WHERE followerId = ?";
         try {
-            ArrayList<User> users = new ArrayList<>();
-            Connection connection = DatabaseHandler.CreateConnection();
+            HashSet<User> users = new HashSet<>();
+            Connection connection = DAO.CreateConnection();
 
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , personId(email));

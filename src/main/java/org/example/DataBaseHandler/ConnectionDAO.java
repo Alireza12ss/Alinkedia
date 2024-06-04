@@ -10,10 +10,10 @@ import java.util.ArrayList;
 
 public class ConnectionDAO {
     public static ArrayList<User> Allconnnections(String email) {
-        String sql = "SELECT * FROM connection WHERE accepted = 1 AND (receiverId = ? OR senderId = ?) ";
+        String sql = "SELECT * FROM connections WHERE accepted = 1 AND (receiverId = ? OR senderId = ?) ";
         try {
             ArrayList<User> users = new ArrayList<>();
-            Connection connection = DatabaseHandler.CreateConnection();
+            Connection connection = DAO.CreateConnection();
 
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , personId(email));
@@ -37,10 +37,10 @@ public class ConnectionDAO {
     }
 
     public static ArrayList<User> requestedConnections(String email) {
-        String sql = "SELECT * FROM connection WHERE accepted = 0 AND (receiverId = ? OR senderId = ?) ";
+        String sql = "SELECT * FROM connections WHERE accepted = 0 AND (receiverId = ? OR senderId = ?) ";
         try {
             ArrayList<User> users = new ArrayList<>();
-            Connection connection = DatabaseHandler.CreateConnection();
+            Connection connection = DAO.CreateConnection();
 
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , personId(email));
@@ -64,9 +64,9 @@ public class ConnectionDAO {
     }
 
     public static String sendRequest(String senderEmail , String receiverEmail , String description) {
-        String sql = "INSERT INTO connection (senderId , receiverId , accepted , description) VALUES (? , ? , 0 , ?)";
+        String sql = "INSERT INTO connections (senderId , receiverId , accepted , description) VALUES (? , ? , 0 , ?)";
         try {
-            Connection connection = DatabaseHandler.CreateConnection();
+            Connection connection = DAO.CreateConnection();
 
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , personId(senderEmail));
@@ -84,9 +84,9 @@ public class ConnectionDAO {
     }
 
     public static String acceptRequest(String receiverEmail , String senderEmail){
-        String sql = "UPDATE connection SET accepted = 1 where (receiverId = ? AND senderId = ?) OR (receiverId = ? AND senderId = ?)";
+        String sql = "UPDATE connections SET accepted = 1 where (receiverId = ? AND senderId = ?) OR (receiverId = ? AND senderId = ?)";
         try {
-            Connection connection = DatabaseHandler.CreateConnection();
+            Connection connection = DAO.CreateConnection();
 
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , personId(senderEmail));
@@ -107,7 +107,7 @@ public class ConnectionDAO {
     private static int personId(String email){
         String sql = "Select * From users WHERE email = ?";
         try {
-            Connection connection = DatabaseHandler.CreateConnection();
+            Connection connection = DAO.CreateConnection();
 
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1 , email);
@@ -128,7 +128,7 @@ public class ConnectionDAO {
     private static String personEmail(int id){
         String sql = "Select * From users WHERE id = ?";
         try {
-            Connection connection = DatabaseHandler.CreateConnection();
+            Connection connection = DAO.CreateConnection();
 
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , id);

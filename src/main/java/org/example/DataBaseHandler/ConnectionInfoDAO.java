@@ -1,7 +1,6 @@
 package org.example.DataBaseHandler;
 
 import org.example.Model.ConnectionInfo;
-import org.example.Model.Education;
 
 import java.sql.*;
 
@@ -10,7 +9,7 @@ public class ConnectionInfoDAO {
         String sql = "Select * From connectionInfos where id = ?";
 
         try {
-            Connection connection = DatabaseHandler.CreateConnection();
+            Connection connection = DAO.CreateConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , educationId);
             ResultSet set = statement.executeQuery();
@@ -37,7 +36,7 @@ public class ConnectionInfoDAO {
 
     public static String addConnectionInfo(String userEmail , String userLink, String email, String phoneNumber, String phoneType
             , String address, Date birthday, String birthdayAccess, String otherWay) throws SQLException {
-        Connection connection = DatabaseHandler.CreateConnection();
+        Connection connection = DAO.CreateConnection();
 
         String sql = "INSERT INTO connectionInfos (userLink , email, phoneNumber,  phoneType,address,\n" +
                 "                birthday,birthdayAccess , otherWay) VALUES (? , ? , ? , ? , ? , ? ,? , ?) ";
@@ -63,7 +62,7 @@ public class ConnectionInfoDAO {
         String sql = "Select * From connectionInfos where email = ? AND userLink = ?";
 
         try {
-            Connection connection = DatabaseHandler.CreateConnection();
+            Connection connection = DAO.CreateConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1 , email);
             statement.setString(2 , userLink);

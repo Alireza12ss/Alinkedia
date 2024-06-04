@@ -75,7 +75,7 @@ public class UserDAO extends DAO {
 
                 JwtGenerator generator = new JwtGenerator();
 
-                String token = generator.createToken(claims, 60);
+                String token = generator.createToken(claims, 24);
 
                 return token;
             }else {
