@@ -29,6 +29,8 @@ public class Server {
             server.createContext("/post" , new PostHandler());
             server.createContext("/follow" , new FollowHandler());
             server.createContext("/connect" , new ConnectionHandler());
+            server.createContext("/feed" , new FeedHandler());
+            server.createContext("/like", new LikeHandler());
         }catch (IOException e){
 
         }
