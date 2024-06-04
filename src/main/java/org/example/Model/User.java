@@ -12,13 +12,15 @@ public class User { // images hasn't been considered
         this.email = email;
     }
 
-    public User( String firstName, String lastName, String additionalName, String title, int jobId , int educationId , String imagePathProfile,
+    public User( String firstName, String lastName, String additionalName,String email , String title, int jobId , int educationId , int connectionInfoId , String imagePathProfile,
                 String imagePathBackground, String country, String city, String profession) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.additionalName = additionalName;
         this.title = title;
+        this.connectionInfoId = connectionInfoId;
         this.jobId = jobId;
+        this.email = email;
         this.educationId = educationId;
         this.imagePathProfile = imagePathProfile;
         this.imagePathBackground = imagePathBackground;
@@ -42,6 +44,14 @@ public class User { // images hasn't been considered
         return connectionInfoId;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
     private String title;
     private String imagePathProfile;
     private String imagePathBackground;
@@ -49,6 +59,11 @@ public class User { // images hasn't been considered
     private int educationId;
     private int connectionInfoId;
     private String country;
+
+    public String getEmail() {
+        return email;
+    }
+
     private String city;
     private String profession;
     // + open to work or hiring or ...
@@ -68,7 +83,6 @@ public class User { // images hasn't been considered
                 lastName + "\n"
                 +"additionalname : " + additionalName
                 + "\n email : " + email
-                + "\npassword : " + password
                 +"\n\n*********\n\n";
     }
 
@@ -81,4 +95,6 @@ public class User { // images hasn't been considered
                         + "\n" + country + ", " + city);
         return profile;
     }
+
+
 }
