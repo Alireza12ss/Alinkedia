@@ -20,38 +20,38 @@ public class ProfileHandler implements HttpHandler {
     HttpHeaders httpHeaders;
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        UserController userController = new UserController();
         String method = exchange.getRequestMethod();
         String path = exchange.getRequestURI().getPath();
         String response = "";
         String[] pathSplit = path.split("/");
         Map<String, Object> decoded = decodeToken(exchange.getRequestHeaders().getFirst("Authorization"));
+        String Email = decoded.get("email").toString();
         switch (method){
             case "GET" :
                 if (pathSplit.length == 2){
                     try {
-                        response = ProfileController.showProfile(decoded.get("email").toString());
+                        response = ProfileController.showProfile(Email);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
                 }
                 else if (pathSplit[2].equals("job")){
                     try {
-                        response = ProfileController.showJob(decoded.get("email").toString());
+                        response = ProfileController.showJob(Email);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
                 }
                 else if (pathSplit[2].equals("education")) {
                     try {
-                        response = ProfileController.showEducation(decoded.get("email").toString());
+                        response = ProfileController.showEducation(Email);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
                 }
                 else if (pathSplit[2].equals("connectionInfo")) {
                     try {
-                        response = ProfileController.showConnectionInfo(decoded.get("email").toString());
+                        response = ProfileController.showConnectionInfo(Email);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
@@ -62,7 +62,7 @@ public class ProfileHandler implements HttpHandler {
                     // get json
                     JSONObject jsonObject = createJsonObject(exchange);
                     try {
-                        response = ProfileController.addJob(decoded.get("email").toString() ,jsonObject.getString("title"), jsonObject.getString("employmentType"), jsonObject.getString("companyName"),
+                        response = ProfileController.addJob(Email ,jsonObject.getString("title"), jsonObject.getString("employmentType"), jsonObject.getString("companyName"),
                                 jsonObject.getString("location"), jsonObject.getString("locationType")
                                 , jsonObject.getBoolean("activity"), Date.valueOf(jsonObject.getString("startToWork")),
                                 Date.valueOf(jsonObject.getString("endToWork")), jsonObject.getString("description"));
@@ -73,7 +73,7 @@ public class ProfileHandler implements HttpHandler {
                     // get json
                     JSONObject jsonObject = createJsonObject(exchange);
                     try {
-                        response = ProfileController.addEducation(decoded.get("email").toString() ,jsonObject.getString("schoolName")
+                        response = ProfileController.addEducation(Email ,jsonObject.getString("schoolName")
                                 , jsonObject.getString("fieldOfStudy") , Date.valueOf(jsonObject.getString("startDate")),
                                 Date.valueOf(jsonObject.getString("endDate")), jsonObject.getDouble("grade"), jsonObject.getString("activitiesAndSocieties"),
                                 jsonObject.getString("description"));
@@ -84,7 +84,7 @@ public class ProfileHandler implements HttpHandler {
                     // get json
                     JSONObject jsonObject = createJsonObject(exchange);
                     try {
-                        response = ProfileController.addConnectionInfo(decoded.get("email").toString() ,jsonObject.getString("userLink")
+                        response = ProfileController.addConnectionInfo(Email ,jsonObject.getString("userLink")
                                 , jsonObject.getString("email") , jsonObject.getString("phoneNumber"),
                                 jsonObject.getString("phoneType"), jsonObject.getString("address"), Date.valueOf(jsonObject.getString("birthday")),
                                 jsonObject.getString("birthdayAccess") , jsonObject.getString("otherWay"));

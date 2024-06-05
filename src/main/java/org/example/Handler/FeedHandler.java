@@ -28,9 +28,8 @@ public class FeedHandler implements HttpHandler {
         exchange.sendResponseHeaders(200, response.length());
         try (
                 OutputStream outputStream = exchange.getResponseBody()) {
-            outputStream.write(response.getBytes());
-        } catch (
-                IOException e) {
+                outputStream.write(response.getBytes());
+        }catch (IOException e) {
             System.out.println("IOException");
         }
     }
