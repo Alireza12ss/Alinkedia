@@ -1,20 +1,16 @@
 package org.example.DataBaseHandler;
 
 import org.example.JWTgenerator.JwtGenerator;
-import org.example.Model.ConnectionInfo;
-import org.example.Model.Education;
 import org.example.Model.User;
-import org.jetbrains.annotations.Nullable;
 
-import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class UserDAO extends DatabaseHandler{
+public class UserDAO extends DAO {
     public static String signUp( String firstName , String lastName ,  String email , String pass) throws SQLException {
         try {
-            Connection connection = DatabaseHandler.CreateConnection();
+            Connection connection = DAO.CreateConnection();
 
             String sql = "INSERT INTO users (firstName , lastName , email , password) VALUES (? , ? , ? , ?) ";
 
@@ -25,7 +21,7 @@ public class UserDAO extends DatabaseHandler{
             pstmt.setString(2 , lastName);
             //check email
             if (DataCheck.CheckEmail(email)){
-                pstmt.setString(4 , email);
+                pstmt.setString(3 , email);
             }else {
                 pstmt.close();
                 return "invalid email";
@@ -40,9 +36,13 @@ public class UserDAO extends DatabaseHandler{
                         "your password should contain at least 8 digits or letters";
             }
 
-            pstmt.executeUpdate();
+            if (DataCheck.uniqueEmail(email)) {
+                pstmt.executeUpdate();
 
-            return "User sign up";
+                return "User sign up";
+            }else {
+                return "this email already have account";
+            }
 
         }catch (SQLIntegrityConstraintViolationException e){
             e.toString();
@@ -56,22 +56,26 @@ public class UserDAO extends DatabaseHandler{
 
     }
 
-    public static String login(String email) throws SQLException {
+    public static String login(String email , String pass) throws SQLException {
         String sql = "Select * From users where email = ?";
 
         try {
-            Connection connection = DatabaseHandler.CreateConnection();
+            Connection connection = DAO.CreateConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1 , email);
             ResultSet set = statement.executeQuery();
             if (set.next()) {
+                if (!DataCheck.decrypt(set.getString("password")).equals(pass)){
+                    return "invalid pass!";
+                }
+
                 HashMap<String, Object> claims = new HashMap<>();
 
                 claims.put("email", email);
 
                 JwtGenerator generator = new JwtGenerator();
 
-                String token = generator.createToken(claims, 60);
+                String token = generator.createToken(claims, 24);
 
                 return token;
             }else {
@@ -100,7 +104,7 @@ public class UserDAO extends DatabaseHandler{
                 " ,imagePathBackground = ? ,country = ? ,city = ? ,profession = ?  WHERE email = ?;";
 
         try {
-            Connection connection = DatabaseHandler.CreateConnection();
+            Connection connection = DAO.CreateConnection();
 
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1,additionalName);
@@ -131,18 +135,11 @@ public class UserDAO extends DatabaseHandler{
         return JobDAO.getJob(user.getJobId()).toString();
     }
 
-    public static String addJob(String email ,String title, String employmentType,  String companyName, String location,
-                                String locationType, boolean activity, Date startToWork, Date endToWork, String description) throws SQLException {
-        return JobDAO.addJob(email , title, employmentType,  companyName,location,
-                locationType,activity,  startToWork, endToWork, description);
-
-    }
-
     public static void updateJobId(String email, int jobId){
         String sql = "UPDATE users SET jobId = ? where email = ?";
 
         try {
-            Connection connection = DatabaseHandler.CreateConnection();
+            Connection connection = DAO.CreateConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , jobId);
             statement.setString(2 , email);
@@ -166,7 +163,7 @@ public class UserDAO extends DatabaseHandler{
         String sql = "UPDATE users SET ConnectionInfoId = ? where email = ?";
 
         try {
-            Connection connection = DatabaseHandler.CreateConnection();
+            Connection connection = DAO.CreateConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , ConnectionInfo);
             statement.setString(2 , email);
@@ -186,18 +183,11 @@ public class UserDAO extends DatabaseHandler{
         return EducationDAO.getEducation(user.getEducationId()).toString();
     }
 
-    public static String addEducation(String email , String schoolName, String fieldOfStudy, Date startDate, Date endDate,
-                                      double grade, String activitiesAndSocieties, String descriptions) throws SQLException {
-        return EducationDAO.addEducation(email , schoolName , fieldOfStudy, startDate,  endDate,grade,
-                activitiesAndSocieties,descriptions);
-
-    }
-
     public static void updateEducationId(String email, int EducationId){
         String sql = "UPDATE users SET educationId = ? where email = ?";
 
         try {
-            Connection connection = DatabaseHandler.CreateConnection();
+            Connection connection = DAO.CreateConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , EducationId);
             statement.setString(2 , email);
@@ -211,12 +201,51 @@ public class UserDAO extends DatabaseHandler{
 
 
 
+    //search
+    public static ArrayList<User> searchUsers(String firstName , String lastName) throws SQLException {
+        String first = "%".concat(firstName);
+        String last = "%".concat(lastName);
+        String sql = "Select * From users WHERE firstName LIKE ? or lastName LIKE ?";
+        try {
+            ArrayList<User> users = new ArrayList<>();
+
+            Connection connection = DAO.CreateConnection();
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1 , first.concat("%"));
+            statement.setString(2 , last.concat("%"));
+            ResultSet set = statement.executeQuery();
+
+            while (set.next()) {
+                String decryptedPass = DataCheck.encrypt(set.getString("password"));
+                User user = new User(set.getString("firstname") ,
+                        set.getString("lastname") ,
+                        set.getString("email") ,
+                        decryptedPass);
+
+                users.add(user);
+            }
+
+            return users;
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
+
+
+
     public static ArrayList<User> getAllUsers() throws SQLException {
         String sql = "Select * From users";
         try {
             ArrayList<User> users = new ArrayList<>();
 
-            Connection connection = DatabaseHandler.CreateConnection();
+            Connection connection = DAO.CreateConnection();
 
             Statement statement = connection.prepareStatement(sql);
 
@@ -246,7 +275,7 @@ public class UserDAO extends DatabaseHandler{
         String sql = "Select * From users where email = ?";
 
         try {
-            Connection connection = DatabaseHandler.CreateConnection();
+            Connection connection = DAO.CreateConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1 , email);
             ResultSet set = statement.executeQuery();
@@ -255,6 +284,7 @@ public class UserDAO extends DatabaseHandler{
                 user = new User(set.getString("firstName"),
                         set.getString("lastName"),
                         set.getString("additionalName"),
+                        set.getString("email"),
                         set.getString("title"),
                         set.getInt("jobId"),
                         set.getInt("educationId"),
@@ -276,12 +306,14 @@ public class UserDAO extends DatabaseHandler{
 
     }
 
+
+
     public static String deleteAllUsers() {
         String sql = "delete From users";
         try {
             ArrayList<User> users = new ArrayList<>();
 
-            Connection connection = DatabaseHandler.CreateConnection();
+            Connection connection = DAO.CreateConnection();
 
             Statement statement = connection.prepareStatement(sql);
 
@@ -300,7 +332,7 @@ public class UserDAO extends DatabaseHandler{
         String sql = "delete From users where email = ?";
         try {
 
-            Connection connection = DatabaseHandler.CreateConnection();
+            Connection connection = DAO.CreateConnection();
 
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1 , email);
