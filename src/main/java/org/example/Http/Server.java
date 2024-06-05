@@ -32,9 +32,8 @@ public class Server {
             server.createContext("/feed" , new FeedHandler());
             server.createContext("/like", new LikeHandler());
         }catch (IOException e){
-
+            e.printStackTrace();
         }
-
         server.start();
     }
 
