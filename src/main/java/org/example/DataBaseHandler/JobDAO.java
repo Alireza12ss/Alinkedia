@@ -1,7 +1,6 @@
 package org.example.DataBaseHandler;
 
 import org.example.Model.Job;
-import org.example.Model.User;
 
 import java.sql.*;
 
@@ -10,7 +9,7 @@ public class JobDAO {
         String sql = "Select * From jobs where id = ?";
 
         try {
-            Connection connection = DatabaseHandler.CreateConnection();
+            Connection connection = DAO.CreateConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , jobId);
             ResultSet set = statement.executeQuery();
@@ -38,7 +37,7 @@ public class JobDAO {
 
     public static String addJob(String email ,String title, String employmentType, String companyName, String location, String locationType ,
                                 boolean activity, Date startToWork, Date endToWork, String description) throws SQLException {
-        Connection connection = DatabaseHandler.CreateConnection();
+        Connection connection = DAO.CreateConnection();
 
         String sql = "INSERT INTO jobs (title, employmentType,  companyName,location,\n" +
                 "                locationType,activity,  startToWork, endToWork, description) VALUES (? , ? , ? , ? , ? ,? , ? , ? , ?) ";
@@ -65,7 +64,7 @@ public class JobDAO {
         String sql = "Select * From jobs where title = ? AND companyName = ?";
 
         try {
-            Connection connection = DatabaseHandler.CreateConnection();
+            Connection connection = DAO.CreateConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1 , title);
             statement.setString(2 , companyName);

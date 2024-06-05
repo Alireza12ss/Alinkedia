@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
 public class PostController extends Controller{
-    public String createPost(String userEmail , String txt){
+    public String createPost(String userEmail , String txt , String mediaPath){
         try {
-            return PostDAO.createPost(userEmail , txt);
+            return PostDAO.createPost(userEmail , txt , mediaPath);
         }catch (SQLIntegrityConstraintViolationException e){
             return "SQLIntegrityConstraintViolationException";
         }catch (SQLException e){

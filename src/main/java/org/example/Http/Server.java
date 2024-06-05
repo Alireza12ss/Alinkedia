@@ -31,9 +31,11 @@ public class Server {
             server.createContext("/connect" , new ConnectionHandler());
             server.createContext("/feed" , new FeedHandler());
             server.createContext("/like", new LikeHandler());
+            server.createContext("/hashtag" , new HashtagHandler());
         }catch (IOException e){
-            e.printStackTrace();
+
         }
+
         server.start();
     }
 
