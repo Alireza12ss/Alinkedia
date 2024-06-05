@@ -1,10 +1,7 @@
 package org.example.Http;
 
-import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import org.example.Controller.ErrorController;
-import org.example.Handler.PostHandler;
-import org.example.Handler.UserHandler;
+import org.example.Handler.*;
 
 
 import java.io.IOException;
@@ -18,63 +15,31 @@ public class Server {
         createServer(port);
     }
 
-
-    /**
-     * create server on the localhost IP and entered port number
-     * @param port
-     * @throws IOException
-     */
-    private void createServer(int port) throws IOException {
-        InetAddress localAddress = InetAddress.getByName("127.0.0.1");
-        this.server = HttpServer.create(new InetSocketAddress(localAddress, port), 0);
-
-        server.createContext("/signup", new UserHandler());
-        server.createContext("/login", new UserHandler());
-        server.createContext("/post" , new PostHandler());
-
+    private void createServer(int port){
+        try {
+            InetAddress localAddress = InetAddress.getByName("127.0.0.1");
+            this.server = HttpServer.create(new InetSocketAddress(localAddress, port), 0);
+            //sign up -> POST
+            //login -> GET
+            //Profile -> GET & PUT
+            server.createContext("/signup", new UserHandler());
+            server.createContext("/login", new UserHandler());
+            server.createContext("/search", new UserHandler());
+            server.createContext("/profile", new ProfileHandler());
+            server.createContext("/post" , new PostHandler());
+            server.createContext("/follow" , new FollowHandler());
+            server.createContext("/connect" , new ConnectionHandler());
+            server.createContext("/feed" , new FeedHandler());
+            server.createContext("/like", new LikeHandler());
+        }catch (IOException e){
+            e.printStackTrace();
+        }
         server.start();
     }
 
-    /**
-     * @return server
-     */
     public static HttpServer getServer() {
         return server;
     }
 
-    /**
-     * if the request be GET, it calls handle method of HttpHandler with exchange
-     * @param path string of path
-     * @param handler a HttpHandler object
-     */
-    public void get(String path,HttpHandler handler) {
-        server.createContext(path, (exchange) -> {
-            if (exchange.getRequestMethod().equals("GET")) {
-                handler.handle(exchange);
-            } else {
-                ErrorController.MethodNotSupported(exchange);
-            }
-        });
-    }
-
-    /**
-     * if the request be POST, it calls handle method of HttpHandler with exchange
-     * @param path string of path
-     * @param handler a HttpHandler object
-     */
-    public void post(String path,HttpHandler handler) {
-        server.createContext(path, (exchange) -> {
-            if (exchange.getRequestMethod().equals("POST")) {
-                handler.handle(exchange);
-            } else {
-                ErrorController.MethodNotSupported(exchange);
-            }
-        });
-
-    }
-
-//    public void sendMessage(){
-//        server.
-//    }
 
 }
