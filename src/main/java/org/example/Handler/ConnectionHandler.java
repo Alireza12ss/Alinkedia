@@ -23,7 +23,7 @@ public class ConnectionHandler implements HttpHandler {
         switch (method){
             case "GET" :
                 if (pathSplit.length == 2){
-                    response = ConnectionController.Allconnections(Email);
+                    response = ConnectionController.AllConnections(Email);
                 }else if (pathSplit[2].equals("requested")){
                     response = ConnectionController.requestedConnections(Email);
                 }

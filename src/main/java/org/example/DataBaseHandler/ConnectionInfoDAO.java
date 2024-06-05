@@ -10,10 +10,11 @@ public class ConnectionInfoDAO {
 
         try {
             Connection connection = DAO.CreateConnection();
+            assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , educationId);
             ResultSet set = statement.executeQuery();
-            ConnectionInfo con = null;
+            ConnectionInfo con;
             if (set.next()) {
                 con = new ConnectionInfo(set.getString("userLink") ,
                         set.getString("email") ,
@@ -41,6 +42,7 @@ public class ConnectionInfoDAO {
         String sql = "INSERT INTO connectionInfos (userLink , email, phoneNumber,  phoneType,address,\n" +
                 "                birthday,birthdayAccess , otherWay) VALUES (? , ? , ? , ? , ? , ? ,? , ?) ";
 
+        assert connection != null;
         PreparedStatement pstmt = connection.prepareStatement(sql);
 
 
@@ -63,6 +65,7 @@ public class ConnectionInfoDAO {
 
         try {
             Connection connection = DAO.CreateConnection();
+            assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1 , email);
             statement.setString(2 , userLink);

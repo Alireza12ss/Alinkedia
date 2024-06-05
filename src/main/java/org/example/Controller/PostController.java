@@ -1,10 +1,10 @@
 package org.example.Controller;
 
 import org.example.DataBaseHandler.PostDAO;
-import org.example.DataBaseHandler.UserDAO;
 
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Objects;
 
 public class PostController extends Controller{
     public String createPost(String userEmail , String txt , String mediaPath){
@@ -18,10 +18,10 @@ public class PostController extends Controller{
     }
 
     public String getPosts(String email) {
-        return PostDAO.getPosts(email).toString();
+        return Objects.requireNonNull(PostDAO.getPosts(email)).toString();
     }
 
     public String getPost(int postId){
-        return PostDAO.getPost(postId).toString();
+        return Objects.requireNonNull(PostDAO.getPost(postId)).toString();
     }
 }

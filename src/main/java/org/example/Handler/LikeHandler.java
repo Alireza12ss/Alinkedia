@@ -17,6 +17,7 @@ public class LikeHandler implements HttpHandler {
         String response = "";
         String[] pathSplit = path.split("/");
         Map<String, Object> decoded = decodeToken(exchange.getRequestHeaders().getFirst("Authorization"));
+        assert decoded != null;
         String Email = decoded.get("email").toString();
         switch (method) {
             case "GET": // /like

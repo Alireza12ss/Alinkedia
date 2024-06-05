@@ -2,9 +2,11 @@ package org.example.Controller;
 
 import org.example.DataBaseHandler.LikeDAO;
 
+import java.util.Objects;
+
 public class LikeController extends Controller{
     public static String AllLikes(String email) {
-        return LikeDAO.AllLikes(email).toString();
+        return Objects.requireNonNull(LikeDAO.AllLikes(email)).toString();
     }
 
     public static String like(String email , int postId) {
@@ -12,6 +14,6 @@ public class LikeController extends Controller{
     }
 
     public static String postLike(int postId) {
-        return LikeDAO.PostLikes(postId).toString();
+        return Objects.requireNonNull(LikeDAO.PostLikes(postId)).toString();
     }
 }

@@ -27,10 +27,7 @@ public class JwtGenerator {
     }
 
     public static boolean tokenIsValid(String token){
-        if (decodeToken(token) != null){
-            return true;
-        }
-        return false;
+        return decodeToken(token) != null;
     }
 
     public static Map<String, Object> decodeToken(String token) {

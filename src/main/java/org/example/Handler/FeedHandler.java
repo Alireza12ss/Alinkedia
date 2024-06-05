@@ -3,8 +3,6 @@ package org.example.Handler;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.example.Controller.FeedController;
-import org.example.Controller.PostController;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -17,13 +15,16 @@ public class FeedHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         FeedController feedController = new FeedController();
         String method = exchange.getRequestMethod();
-        String response = "";
+        String response;
         Map<String, Object> decoded = decodeToken(exchange.getRequestHeaders().getFirst("Authorization"));
+        assert decoded != null;
         String Email = decoded.get("email").toString();
         switch (method){
             case "GET" :
                 response = feedController.feed(Email);
                 break;
+            default:
+                response = "wrong url";
         }
         exchange.sendResponseHeaders(200, response.length());
         try (

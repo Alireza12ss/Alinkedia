@@ -5,20 +5,20 @@ import com.sun.net.httpserver.HttpHandler;
 import org.example.Controller.CommentController;
 import org.example.Controller.LikeController;
 import org.example.Controller.PostController;
-import org.example.Controller.UserController;
 import org.example.DataBaseHandler.DAO;
 import org.example.DataBaseHandler.PostDAO;
 import org.json.JSONObject;
 
 import java.io.*;
 import java.util.Map;
+import java.util.Objects;
 
 import static org.example.JWTgenerator.JwtGenerator.decodeToken;
 
 public class PostHandler implements HttpHandler {
 
     public static String findHashtags(String hashtag) {
-        return PostDAO.findHashtags(hashtag).toString();
+        return Objects.requireNonNull(PostDAO.findHashtags(hashtag)).toString();
     }
 
     @Override
@@ -29,6 +29,7 @@ public class PostHandler implements HttpHandler {
         String response = "";
         String[] pathSplit = path.split("/");
         Map<String, Object> decoded = decodeToken(exchange.getRequestHeaders().getFirst("Authorization"));
+        assert decoded != null;
         String Email = decoded.get("email").toString();
         switch (method){
             case "GET" :
@@ -84,7 +85,6 @@ public class PostHandler implements HttpHandler {
         }
         requestBody.close();
 
-        JSONObject jsonObject = new JSONObject(body.toString());
-        return jsonObject;
+        return new JSONObject(body.toString());
     }
 }

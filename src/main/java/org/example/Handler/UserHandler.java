@@ -46,30 +46,6 @@ public class UserHandler implements HttpHandler {
                         , (String)jsonObject.get("lastName") , (String)jsonObject.get("email")
                         , (String)jsonObject.get("password"));
                 break;
-//            case "PATCH" :
-//                //get json
-//                InputStream requestBodyp = exchange.getRequestBody();
-//                BufferedReader readerp = new BufferedReader(new InputStreamReader(requestBodyp));
-//                StringBuilder bodyp = new StringBuilder();
-//                String linep;
-//                while ((linep = readerp.readLine()) != null) {
-//                    bodyp.append(linep);
-//                }
-//                requestBodyp.close();
-//
-//                JSONObject jsonObjectp = new JSONObject(bodyp.toString());
-//                break;
-//            case "DELETE":
-//                if (pathSplit.length == 2) {
-//                    userController.deleteAllUsers();
-//                    response = "All users deleted";
-//                } else {
-//                    // Extract the user ID from the path
-//                    String userId = pathSplit[pathSplit.length - 1];
-//                    userController.deleteUser(userId);
-//                    response = "user deleted";
-//                }
-//                break;
             default:
                 break;
         }
@@ -82,17 +58,7 @@ public class UserHandler implements HttpHandler {
 
     }
     static JSONObject createJsonObject(HttpExchange exchange) throws IOException {
-        InputStream requestBody = exchange.getRequestBody();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(requestBody));
-        StringBuilder body = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            body.append(line);
-        }
-        requestBody.close();
-
-        JSONObject jsonObject = new JSONObject(body.toString());
-        return jsonObject;
+        return PostHandler.createJsonObject(exchange);
     }
 }
 

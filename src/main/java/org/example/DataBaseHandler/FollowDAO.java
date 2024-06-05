@@ -19,6 +19,7 @@ public class FollowDAO {
         try {
             Connection connection = DAO.CreateConnection();
 
+            assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , personId(followerEmail));
             statement.setInt(2 , personId(followingEmail));
@@ -39,6 +40,7 @@ public class FollowDAO {
             ArrayList<User> users = new ArrayList<>();
             Connection connection = DAO.CreateConnection();
 
+            assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , personId(email));
             ResultSet set = statement.executeQuery();
@@ -61,13 +63,15 @@ public class FollowDAO {
             HashSet<User> users = new HashSet<>();
             Connection connection = DAO.CreateConnection();
 
+            assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , personId(email));
             ResultSet set = statement.executeQuery();
             while (set.next()){
                 User us = UserDAO.getUniqueUser(personEmail(set.getInt("followingId")));
-                if (us != null )
-                users.add(UserDAO.getUniqueUser(personEmail(set.getInt("followingId"))));
+                if (us != null ) {
+                    users.add(UserDAO.getUniqueUser(personEmail(set.getInt("followingId"))));
+                }
             }
 
             return users;

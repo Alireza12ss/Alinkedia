@@ -10,10 +10,11 @@ public class JobDAO {
 
         try {
             Connection connection = DAO.CreateConnection();
+            assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , jobId);
             ResultSet set = statement.executeQuery();
-            Job job = null;
+            Job job;
             if (set.next()) {
                 job = new Job(set.getString("title") ,
                         set.getString("employmentType") ,
@@ -42,6 +43,7 @@ public class JobDAO {
         String sql = "INSERT INTO jobs (title, employmentType,  companyName,location,\n" +
                 "                locationType,activity,  startToWork, endToWork, description) VALUES (? , ? , ? , ? , ? ,? , ? , ? , ?) ";
 
+        assert connection != null;
         PreparedStatement pstmt = connection.prepareStatement(sql);
 
 
@@ -65,6 +67,7 @@ public class JobDAO {
 
         try {
             Connection connection = DAO.CreateConnection();
+            assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1 , title);
             statement.setString(2 , companyName);
