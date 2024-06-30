@@ -1,4 +1,4 @@
-package org.example.demologin;
+package org.example.Controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,9 +10,9 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import static org.example.demologin.LoginApplication.url;
-import static org.example.demologin.ParentController.goToFeed;
-import static org.example.demologin.ParentController.transfer;
+import static org.example.Controllers.LoginApplication.url;
+import static org.example.Controllers.ParentController.goToFeed;
+import static org.example.Controllers.ParentController.transfer;
 
 public class LoginController {
     @FXML

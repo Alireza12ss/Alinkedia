@@ -1,10 +1,10 @@
-package org.example.demologin;
+package org.example.Controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 
-import static org.example.demologin.ParentController.transfer;
+import static org.example.Controllers.ParentController.transfer;
 
 public class ProfileController {
     @FXML

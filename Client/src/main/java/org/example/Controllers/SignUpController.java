@@ -1,4 +1,4 @@
-package org.example.demologin;
+package org.example.Controllers;
 
 
 import com.google.gson.JsonObject;
@@ -14,9 +14,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
-import static org.example.demologin.LoginApplication.url;
-import static org.example.demologin.ParentController.goToFeed;
-import static org.example.demologin.ParentController.transfer;
+import static org.example.Controllers.LoginApplication.url;
+import static org.example.Controllers.ParentController.goToFeed;
+import static org.example.Controllers.ParentController.transfer;
 
 public class SignUpController {
     @FXML

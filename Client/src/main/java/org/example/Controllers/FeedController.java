@@ -1,4 +1,4 @@
-package org.example.demologin;
+package org.example.Controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,16 +8,37 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import java.io.*;
 
-import static org.example.demologin.ParentController.transfer;
+import java.io.*;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import static org.example.Controllers.ParentController.transfer;
+
 
 public class FeedController {
     @FXML
     private Button logOut;
     @FXML
     private Label title;
+
+    @FXML
+    private VBox list;
+
+    @FXML
+    public void initialize() {
+        VBox pane = null;
+        System.out.println("here");
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(FeedController.class.getResource("fakepost.fxml"));
+            pane = fxmlLoader.load();
+        } catch (IOException e) {
+            System.out.println("it's here");
+        }
+        list.getChildren().setAll(pane);
+    }
 
     @FXML
     protected void backToLogin(){

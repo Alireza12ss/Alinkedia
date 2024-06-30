@@ -1,4 +1,4 @@
-package org.example.demologin;
+package org.example.Controllers;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
