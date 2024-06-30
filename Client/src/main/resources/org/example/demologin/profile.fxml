@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demologin.ProfileController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.Controllers.ProfileController">
     <top>
         <GridPane hgap="20.0" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
             <columnConstraints>
@@ -57,7 +57,7 @@
                      <children>
                         <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="318.0" prefWidth="570.0">
                            <children>
-                              <ImageView fitHeight="98.0" fitWidth="111.0" pickOnBounds="true" preserveRatio="true" style="-fx-scale-x: 5.7; -fx-image: ;" styleClass="borderImage.css">
+                              <ImageView fitHeight="98.0" fitWidth="111.0" pickOnBounds="true" preserveRatio="true" style="-fx-scale-x: 5.7 ;">
                                  <image>
                                     <Image url="@../../../tic-tac-toe-seamless-background-on-dark-blue-illustration-vector.jpg" />
                                  </image>
