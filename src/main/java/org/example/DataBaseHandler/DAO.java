@@ -10,10 +10,7 @@ public class DAO {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            Connection connection = DriverManager.getConnection(url , username , password);
-
-
-            return connection;
+            return DriverManager.getConnection(url , username , password);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -26,11 +23,12 @@ public class DAO {
         try {
             Connection connection = DAO.CreateConnection();
 
+            assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1 , email);
             ResultSet set = statement.executeQuery();
 
-            while (set.next()) {
+            if (set.next()) {
                 return set.getInt("id");
             }
             return 0;
@@ -47,11 +45,12 @@ public class DAO {
         try {
             Connection connection = DAO.CreateConnection();
 
+            assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , id);
             ResultSet set = statement.executeQuery();
 
-            while (set.next()) {
+            if (set.next()) {
                 return set.getString("email");
             }
             return null;

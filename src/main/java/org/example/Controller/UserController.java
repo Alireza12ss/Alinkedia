@@ -42,7 +42,7 @@ public class UserController extends Controller{
     }
 
     public String searchUser(String firstName , String lastName) throws SQLException {
-        return UserDAO.searchUsers(firstName , lastName).toString();
+        return Objects.requireNonNull(UserDAO.searchUsers(firstName, lastName)).toString();
     }
 
 }

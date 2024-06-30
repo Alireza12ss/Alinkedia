@@ -1,16 +1,11 @@
 package org.example.Handler;
 
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.example.Controller.FollowController;
-import org.example.JWTgenerator.JwtGenerator;
-import org.json.JSONObject;
 
 import java.io.*;
-import java.sql.SQLException;
 import java.util.Map;
-import java.util.logging.Handler;
 
 import static org.example.JWTgenerator.JwtGenerator.decodeToken;
 
@@ -22,6 +17,7 @@ public class FollowHandler implements HttpHandler {
         String response = "";
         String[] pathSplit = path.split("/");
         Map<String, Object> decoded = decodeToken(exchange.getRequestHeaders().getFirst("Authorization"));
+        assert decoded != null;
         String Email = decoded.get("email").toString();
         switch (method){
             case "GET" :

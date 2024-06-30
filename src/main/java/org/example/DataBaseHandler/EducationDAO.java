@@ -10,10 +10,11 @@ public class EducationDAO {
 
         try {
             Connection connection = DAO.CreateConnection();
+            assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , educationId);
             ResultSet set = statement.executeQuery();
-            Education edu = null;
+            Education edu;
             if (set.next()) {
                 edu = new Education(set.getString("schoolName") ,
                         set.getString("fieldOfStudy") ,
@@ -40,6 +41,7 @@ public class EducationDAO {
         String sql = "INSERT INTO educations (schoolName , fieldOfStudy, startDate,  endDate,grade,\n" +
                 "                activitiesAndSocieties,descriptions) VALUES (? , ? , ? , ? , ? ,? , ?) ";
 
+        assert connection != null;
         PreparedStatement pstmt = connection.prepareStatement(sql);
 
 
@@ -61,6 +63,7 @@ public class EducationDAO {
 
         try {
             Connection connection = DAO.CreateConnection();
+            assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1 , schoolName);
             statement.setString(2 , fieldOfStudy);

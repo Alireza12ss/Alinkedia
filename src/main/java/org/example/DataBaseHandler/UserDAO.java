@@ -6,6 +6,7 @@ import org.example.Model.User;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class UserDAO extends DAO {
     public static String signUp( String firstName , String lastName ,  String email , String pass) throws SQLException {
@@ -14,6 +15,7 @@ public class UserDAO extends DAO {
 
             String sql = "INSERT INTO users (firstName , lastName , email , password) VALUES (? , ? , ? , ?) ";
 
+            assert connection != null;
             PreparedStatement pstmt = connection.prepareStatement(sql);
 
 
@@ -45,7 +47,7 @@ public class UserDAO extends DAO {
             }
 
         }catch (SQLIntegrityConstraintViolationException e){
-            e.toString();
+            e.printStackTrace();
             return "Primary key constraint violated";
         }catch (SQLException e) {
             e.printStackTrace();
@@ -61,11 +63,12 @@ public class UserDAO extends DAO {
 
         try {
             Connection connection = DAO.CreateConnection();
+            assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1 , email);
             ResultSet set = statement.executeQuery();
             if (set.next()) {
-                if (!DataCheck.decrypt(set.getString("password")).equals(pass)){
+                if (!Objects.requireNonNull(DataCheck.decrypt(set.getString("password"))).equals(pass)){
                     return "invalid pass!";
                 }
 
@@ -75,9 +78,7 @@ public class UserDAO extends DAO {
 
                 JwtGenerator generator = new JwtGenerator();
 
-                String token = generator.createToken(claims, 24);
-
-                return token;
+                return generator.createToken(claims, 24);
             }else {
                 return "User not found";
             }
@@ -94,6 +95,7 @@ public class UserDAO extends DAO {
     //Profile
     public static String showProfile(String email) throws SQLException {
         User user = getUniqueUser(email);
+        assert user != null;
         return user.showProfile();
     }
 
@@ -106,6 +108,7 @@ public class UserDAO extends DAO {
         try {
             Connection connection = DAO.CreateConnection();
 
+            assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1,additionalName);
             statement.setString(2,title);
@@ -132,7 +135,8 @@ public class UserDAO extends DAO {
     //job
     public static String showJob(String email) throws SQLException {
         User user = getUniqueUser(email);
-        return JobDAO.getJob(user.getJobId()).toString();
+        assert user != null;
+        return Objects.requireNonNull(JobDAO.getJob(user.getJobId())).toString();
     }
 
     public static void updateJobId(String email, int jobId){
@@ -140,6 +144,7 @@ public class UserDAO extends DAO {
 
         try {
             Connection connection = DAO.CreateConnection();
+            assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , jobId);
             statement.setString(2 , email);
@@ -156,7 +161,7 @@ public class UserDAO extends DAO {
     public static String showConnectionInfo(String email) throws SQLException {
         User user = getUniqueUser(email);
         assert user != null;
-        return ConnectionInfoDAO.getConnectionInfo(user.getConnectionInfoId()).toString();
+        return Objects.requireNonNull(ConnectionInfoDAO.getConnectionInfo(user.getConnectionInfoId())).toString();
     }
 
     public static void updateConnectionInfoId(String email, int ConnectionInfo){
@@ -164,6 +169,7 @@ public class UserDAO extends DAO {
 
         try {
             Connection connection = DAO.CreateConnection();
+            assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , ConnectionInfo);
             statement.setString(2 , email);
@@ -180,7 +186,7 @@ public class UserDAO extends DAO {
     public static String showEducation(String email) throws SQLException {
         User user = getUniqueUser(email);
         assert user != null;
-        return EducationDAO.getEducation(user.getEducationId()).toString();
+        return Objects.requireNonNull(EducationDAO.getEducation(user.getEducationId())).toString();
     }
 
     public static void updateEducationId(String email, int EducationId){
@@ -188,6 +194,7 @@ public class UserDAO extends DAO {
 
         try {
             Connection connection = DAO.CreateConnection();
+            assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , EducationId);
             statement.setString(2 , email);
@@ -202,7 +209,7 @@ public class UserDAO extends DAO {
 
 
     //search
-    public static ArrayList<User> searchUsers(String firstName , String lastName) throws SQLException {
+    public static ArrayList<User> searchUsers(String firstName , String lastName) {
         String first = "%".concat(firstName);
         String last = "%".concat(lastName);
         String sql = "Select * From users WHERE firstName LIKE ? or lastName LIKE ?";
@@ -211,6 +218,7 @@ public class UserDAO extends DAO {
 
             Connection connection = DAO.CreateConnection();
 
+            assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1 , first.concat("%"));
             statement.setString(2 , last.concat("%"));
@@ -247,6 +255,7 @@ public class UserDAO extends DAO {
 
             Connection connection = DAO.CreateConnection();
 
+            assert connection != null;
             Statement statement = connection.prepareStatement(sql);
 
             ResultSet set = statement.executeQuery(sql);
@@ -276,10 +285,11 @@ public class UserDAO extends DAO {
 
         try {
             Connection connection = DAO.CreateConnection();
+            assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1 , email);
             ResultSet set = statement.executeQuery();
-            User user = null;
+            User user;
             if (set.next()) {
                 user = new User(set.getString("firstName"),
                         set.getString("lastName"),
@@ -311,10 +321,10 @@ public class UserDAO extends DAO {
     public static String deleteAllUsers() {
         String sql = "delete From users";
         try {
-            ArrayList<User> users = new ArrayList<>();
 
             Connection connection = DAO.CreateConnection();
 
+            assert connection != null;
             Statement statement = connection.prepareStatement(sql);
 
             statement.executeQuery(sql);
@@ -334,6 +344,7 @@ public class UserDAO extends DAO {
 
             Connection connection = DAO.CreateConnection();
 
+            assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1 , email);
             statement.executeQuery(sql);

@@ -5,13 +5,14 @@ package org.example.DataBaseHandler;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.Base64;
 import java.sql.*;
 import java.util.regex.Pattern;
 
 public class DataCheck {
-    private static final String key = "AESencryptionKey"; // 128 bit key
+    private static final String key = "AESEncryptionKey"; // 128-bit key
     private static final String initVector = "encryptionIntVec"; // 16 bytes IV
 
 
@@ -24,10 +25,7 @@ public class DataCheck {
     }
 
     public static boolean CheckEmail(String email) {
-        if (patternMatches(email)){
-            return true;
-        }
-        return false;
+        return patternMatches(email);
     }
 
     public static boolean uniqueEmail(String email){
@@ -42,10 +40,7 @@ public class DataCheck {
             stmt.setString(1 , email);
 
             ResultSet set = stmt.executeQuery();
-            if (set.next()){
-                return false;
-            }
-            return true;
+            return !set.next();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -68,26 +63,20 @@ public class DataCheck {
                 letters++;
             }
         }
-        if (letters == 0 || digits == 0 ){
-            return false;
-        }
-        return true;
+        return letters != 0 && digits != 0;
     }
 
     public static boolean CheckPass(String pass) {
-        if (isValidPassword(pass)){
-            return true;
-        }
-        return false;
+        return isValidPassword(pass);
     }
 
     public static String encrypt(String password) {
         try {
-            IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
-            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+            IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(StandardCharsets.UTF_8));
+            SecretKeySpec keySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "AES");
 
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-            cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
+            cipher.init(Cipher.ENCRYPT_MODE, keySpec, iv);
 
             byte[] encrypted = cipher.doFinal(password.getBytes());
             return Base64.getEncoder().encodeToString(encrypted);
@@ -99,11 +88,11 @@ public class DataCheck {
 
     public static String decrypt(String encryptedPassword) {
         try {
-            IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
-            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+            IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(StandardCharsets.UTF_8));
+            SecretKeySpec keySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "AES");
 
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-            cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
+            cipher.init(Cipher.DECRYPT_MODE, keySpec, iv);
 
             byte[] original = cipher.doFinal(Base64.getDecoder().decode(encryptedPassword));
 

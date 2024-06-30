@@ -27,6 +27,7 @@ public class Comment {
 
     private static String getName(int userId) throws SQLException {
         User user = UserDAO.getUniqueUser(UserDAO.personEmail(userId));
+        assert user != null;
         return user.getFirstName() + " " + user.getLastName();
     }
 

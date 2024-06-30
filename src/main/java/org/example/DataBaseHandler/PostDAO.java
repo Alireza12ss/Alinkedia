@@ -1,13 +1,13 @@
 package org.example.DataBaseHandler;
 
 import org.example.Model.Post;
-import org.example.Model.User;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,6 +18,7 @@ public class PostDAO {
 
             String sql = "INSERT INTO posts (userId , text , date , time , mediaPath) VALUES (? , ? , ? , ? , ? ) ";
 
+            assert connection != null;
             PreparedStatement stmt = connection.prepareStatement(sql);
 
 
@@ -46,6 +47,7 @@ public class PostDAO {
 
             String sql = "SELECT * FROM posts where userId = ?";
 
+            assert connection != null;
             PreparedStatement stmt = connection.prepareStatement(sql);
 
             stmt.setInt(1 , DAO.personId(email));
@@ -53,7 +55,7 @@ public class PostDAO {
             ResultSet set = stmt.executeQuery();
 
             while (set.next()){
-                Post post = new Post(set.getInt("postId") , LikeDAO.PostLikes(set.getInt("postId")).size() , CommentDAO.getComments(set.getInt("postId")).size()
+                Post post = new Post(set.getInt("postId") , Objects.requireNonNull(LikeDAO.PostLikes(set.getInt("postId"))).size() , Objects.requireNonNull(CommentDAO.getComments(set.getInt("postId"))).size()
                         , set.getInt("userId") , set.getString("text")
                         , set.getDate("date") ,set.getTime("time") , set.getString("mediaPath")) ;
                 posts.add(post);
@@ -72,11 +74,12 @@ public class PostDAO {
 
         try {
             Connection connection = DAO.CreateConnection();
+            assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , id);
             ResultSet set = statement.executeQuery();
             if (set.next()) {
-                return new Post(set.getInt("postId") , LikeDAO.PostLikes(set.getInt("postId")).size() , CommentDAO.getComments(set.getInt("postId")).size()
+                return new Post(set.getInt("postId") , Objects.requireNonNull(LikeDAO.PostLikes(set.getInt("postId"))).size() , Objects.requireNonNull(CommentDAO.getComments(set.getInt("postId"))).size()
                         , set.getInt("userId") , set.getString("text")
                         , set.getDate("date") ,set.getTime("time") , set.getString("mediaPath")) ;
             }
@@ -94,10 +97,11 @@ public class PostDAO {
         ArrayList<Post> posts = new ArrayList<>();
         try {
             Connection connection = DAO.CreateConnection();
+            assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet set = statement.executeQuery();
             if (set.next() && extractHashtags(set.getString("text")).contains("#".concat(hashtag))) {
-                posts.add(new Post(set.getInt("postId") , LikeDAO.PostLikes(set.getInt("postId")).size() , CommentDAO.getComments(set.getInt("postId")).size()
+                posts.add(new Post(set.getInt("postId") , Objects.requireNonNull(LikeDAO.PostLikes(set.getInt("postId"))).size() , Objects.requireNonNull(CommentDAO.getComments(set.getInt("postId"))).size()
                         , set.getInt("userId") , set.getString("text")
                         , set.getDate("date") ,set.getTime("time") , set.getString("mediaPath"))) ;
 

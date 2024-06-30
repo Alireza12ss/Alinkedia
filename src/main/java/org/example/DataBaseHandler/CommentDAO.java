@@ -14,6 +14,7 @@ public class CommentDAO {
         try {
             Connection connection = DAO.CreateConnection();
 
+            assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , userId);
             statement.setInt(2 , postId);
@@ -38,6 +39,7 @@ public class CommentDAO {
             ArrayList<Comment> comments = new ArrayList<>();
             Connection connection = DAO.CreateConnection();
 
+            assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1 , postId);
             ResultSet set = statement.executeQuery();

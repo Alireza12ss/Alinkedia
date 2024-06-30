@@ -3,10 +3,6 @@ package org.example.DataBaseHandler;
 import org.example.Model.Post;
 import org.example.Model.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Objects;
@@ -24,7 +20,7 @@ public class FeedDAO {
     public static HashSet<User> followingAndConnections(String email){
         HashSet<User> res = FollowDAO.getFollowing(email);
         assert res != null;
-        res.addAll(Objects.requireNonNull(ConnectionDAO.Allconnnections(email)));
+        res.addAll(Objects.requireNonNull(ConnectionDAO.AllConnnections(email)));
         return res;
     }
 }

@@ -3,7 +3,7 @@ package org.example.Model;
 import java.util.Date;
 
 public class ConnectionInfo {
-    private String userLink;
+    private final String userLink;
     private String email;
     private String phoneNumber;
     private String phoneType;
