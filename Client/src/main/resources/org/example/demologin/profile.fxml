@@ -58,11 +58,11 @@
                             <children>
                                 <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="572.0" style="-fx-background-color: white; -fx-background-radius: 20px;">
                                     <children>
-                              <Label fx:id="description" alignment="TOP_LEFT" prefHeight="220.0" prefWidth="514.0" text="ds" wrapText="true">
-                                 <VBox.margin>
-                                    <Insets left="35.0" top="170.0" />
-                                 </VBox.margin>
-                              </Label>
+                                        <Label fx:id="description" alignment="TOP_LEFT" prefHeight="220.0" prefWidth="514.0" text="ds" wrapText="true">
+                                            <VBox.margin>
+                                                <Insets left="35.0" top="170.0" />
+                                            </VBox.margin>
+                                        </Label>
                                         <Hyperlink text="? Connections">
                                             <VBox.margin>
                                                 <Insets left="45.0" top="5.0" />
@@ -80,22 +80,22 @@
                                         </MenuButton>
                                     </children>
                                 </VBox>
-                                  <ImageView fitHeight="98.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true" style="-fx-scale-x: 5.8;" styleClass="borderImage.css">
-                                      <image>
-                                          <Image url="@../../../pictures/tic-tac-toe-seamless-background-on-dark-blue-illustration-vector.jpg" />
-                                      </image>
-                           <StackPane.margin>
-                              <Insets left="237.0" />
-                           </StackPane.margin>
-                                  </ImageView>
-                        <GNAvatarView maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="134.0" prefWidth="149.0" type="CIRCLE">
-                           <image>
-                              <Image url="@../../../pictures/sampleImage.jpg" />
-                           </image>
-                           <StackPane.margin>
-                              <Insets left="20.0" top="30.0" />
-                           </StackPane.margin>
-                        </GNAvatarView>
+                                <ImageView fitHeight="98.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true" style="-fx-scale-x: 5.8;" styleClass="borderImage.css">
+                                    <image>
+                                        <Image url="@../../../pictures/tic-tac-toe-seamless-background-on-dark-blue-illustration-vector.jpg" />
+                                    </image>
+                                    <StackPane.margin>
+                                        <Insets left="237.0" />
+                                    </StackPane.margin>
+                                </ImageView>
+                                <GNAvatarView maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="134.0" prefWidth="149.0" type="CIRCLE">
+                                    <image>
+                                        <Image url="@../../../pictures/sampleImage.jpg" />
+                                    </image>
+                                    <StackPane.margin>
+                                        <Insets left="20.0" top="30.0" />
+                                    </StackPane.margin>
+                                </GNAvatarView>
                             </children>
                         </StackPane>
                         <VBox alignment="TOP_CENTER" fillWidth="false" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: white;" styleClass="box" stylesheets="@../../../cssFiles/profileStyle.css">
@@ -128,14 +128,14 @@
                             </children>
                         </VBox>
                     </children>
-               <padding>
-                  <Insets left="500.0" />
-               </padding>
+                    <padding>
+                        <Insets left="500.0" />
+                    </padding>
                 </VBox>
             </content>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
+            <BorderPane.margin>
+                <Insets />
+            </BorderPane.margin>
         </ScrollPane>
     </center>
 </BorderPane>
