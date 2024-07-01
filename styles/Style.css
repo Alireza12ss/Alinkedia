@@ -1,0 +1,41 @@
+.root{
+}
+#title{
+    -fx-background-color: rgba(255, 255, 255, 0);
+    -fx-font-family: Forte;
+    -fx-font-size: 50;
+    -fx-text-fill: indigo;
+}
+.label{
+    -fx-font-size: 20;
+    -fx-font-family: Dubai;
+}
+.button{
+    -fx-background-color: rgba(255, 255, 255, 0);
+    -fx-text-fill: indigo;
+    -fx-border-color: indigo;
+    -fx-min-width: 450;
+    -fx-min-height: 35;
+    -fx-font-size: 20;
+    -fx-border-radius: 10;
+    -fx-border-width: 2;
+}
+#signup{
+    -fx-border-color: rgba(255, 255, 255, 0);
+}
+.button:hover{
+    -fx-background-color: #b2b8ff;
+    -fx-background-radius: 10;
+}
+.text-field{
+    -fx-background-color: rgba(255, 255, 255, 0);
+    -fx-border-color: gray;
+    -fx-border-radius: 5;
+    -fx-border-width: 3;
+    -fx-font-size: 20;
+    -fx-text-fill: indigo;
+}
+.text-field:focused{
+    -fx-border-color: purple;
+    -fx-border-radius: 5;
+}

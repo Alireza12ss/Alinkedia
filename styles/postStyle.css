@@ -10,3 +10,31 @@
     -fx-font-size: 15;
     -fx-background-color: transparent;
 }
+.toggle-button{
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+}
+.toggle-button:hover{
+    -fx-background-color: #b2b8ff;
+    -fx-background-radius: 30;
+}
+.menu-button{
+    -fx-background-color: transparent;
+}
+.menu-button:hover{
+    -fx-background-color: #b2b8ff;
+    -fx-background-radius: 30;
+}
+.menu-button:focused{
+    -fx-border-color: #b2b8ff;
+    -fx-border-radius: 30;
+    -fx-border-width: 3;
+}
+.menu-item:hover{
+    -fx-background-color: indigo;
+    -fx-text-fill: white;
+}
+.menu-item:focused{
+    -fx-background-color: indigo;
+    -fx-text-fill: white;
+}

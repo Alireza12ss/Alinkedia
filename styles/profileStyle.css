@@ -36,13 +36,15 @@
     -fx-font-size: 20;
 }
 .menu-button{
-    -fx-border-color: indigo;
-    -fx-border-radius: 10;
-    -fx-border-width: 3;
+    -fx-background-color: transparent;
+}
+.menu-button:hover{
+    -fx-background-color: #b2b8ff;
+    -fx-background-radius: 30;
 }
 .menu-button:focused{
-    -fx-background-color: transparent;
-    -fx-border-color: indigo;
+    -fx-border-color: #b2b8ff;
+    -fx-border-radius: 30;
     -fx-border-width: 3;
 }
 .menu-item:hover{
