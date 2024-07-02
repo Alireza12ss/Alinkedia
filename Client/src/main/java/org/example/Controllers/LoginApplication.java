@@ -1,4 +1,4 @@
-package org.example.demologin;
+package org.example.Controllers;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -16,8 +16,8 @@ public class LoginApplication extends Application {
         stage.setMaximized(true);
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Alinkedia");
-        scene.getStylesheets().add("/Style.css");
-        stage.getIcons().add(new Image("/ap.png"));
+        scene.getStylesheets().add(String.valueOf(getClass().getResource("/cssFiles/Style.css")));
+        stage.getIcons().add(new Image(String.valueOf(getClass().getResource("/pictures/ap.png"))));
         stage.setScene(scene);
         stage.show();
         System.out.println("hello");

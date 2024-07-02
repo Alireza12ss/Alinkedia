@@ -1,4 +1,4 @@
-package org.example.demologin;
+package org.example.Controllers;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -9,11 +9,32 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import org.example.Model.User;
 
 import java.io.*;
 
 public class ParentController {
-    public static void transfer(FXMLLoader fxmlLoader, String styleSheet , Label label){
+    static User user;
+    public static void transfer(FXMLLoader fxmlLoader, String styleSheet, ActionEvent event){
+        System.out.println(styleSheet);
+        Node node = ((Node) event.getSource());
+        new Thread(() -> {
+            final Scene newScene;
+            try {
+                newScene = new Scene(fxmlLoader.load(), node.getScene().getWidth(), node.getScene().getHeight());
+                newScene.getStylesheets().add(styleSheet);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            Platform.runLater(() -> {
+                Stage currentStage = (Stage)node.getScene().getWindow();
+                currentStage.setScene(newScene);
+            });
+        }).start();
+    }
+
+    public static void transferp(FXMLLoader fxmlLoader, String styleSheet , Label label){
         System.out.println(styleSheet);
         new Thread(() -> {
             final Scene newScene;
@@ -32,9 +53,14 @@ public class ParentController {
     }
 
     @FXML
-    public static void goToFeed(Label label) throws IOException {
+    public static void goToFeed(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("demoFeed.fxml"));
-        transfer(fxmlLoader, "/feedStyle.css" , label);
+        transfer(fxmlLoader, String.valueOf(LoginController.class.getResource("/cssFiles/feedStyle.css")) , event);
+    }
+    @FXML
+    public static void goToFeedp(Label label) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("demoFeed.fxml"));
+        transferp(fxmlLoader, String.valueOf(LoginController.class.getResource("/cssFiles/feedStyle.css")) , label);
     }
 
     protected static void deleteToken(){
