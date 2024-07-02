@@ -1,0 +1,8 @@
+.root{
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-font-size: 15;
+}
+.text-area{
+    -fx-background-color: transparent;
+}

@@ -1,0 +1,37 @@
+.root{
+    -fx-font-family: Dubai;
+}
+.button{
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+    -fx-font-size: 30;
+}
+.button:hover{
+    -fx-background-color: #b2b8ff;
+    -fx-background-radius: 30;
+}
+.text-area{
+    -fx-background-color: transparent;
+    -fx-border-color: gray;
+    -fx-border-radius: 10;
+    -fx-font-size: 25;
+    -fx-text-fill: indigo;
+}
+.text-area:focused{
+    -fx-border-color: indigo;
+    -fx-border-width: 3;
+}
+.text-field{
+    -fx-background-color: transparent;
+    -fx-border-color: gray;
+    -fx-border-radius: 10;
+    -fx-font-size: 25;
+    -fx-text-fill: indigo;
+}
+.text-field:focused{
+    -fx-border-color: indigo;
+    -fx-border-width: 3;
+}
+.label{
+    -fx-font-size: 30;
+}
