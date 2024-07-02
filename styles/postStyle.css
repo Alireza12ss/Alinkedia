@@ -1,3 +1,10 @@
+.root{
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-border-width: 2;
+    -fx-border-color: #b2b8ff;
+    -fx-border-radius: 15;
+}
 .button{
     -fx-background-color: transparent;
     -fx-text-fill: black;
