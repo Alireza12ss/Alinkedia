@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" spacing="20.0" stylesheets="@../../../cssFiles/postStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.Controllers.PostController">
+    <children>
+        <GridPane>
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Button mnemonicParsing="false" onAction="#goToProfile" text="Man with Bear">
+                    <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../pictures/sampleImage.jpg" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <MenuButton alignment="CENTER" mnemonicParsing="false" GridPane.columnIndex="1">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Action 1" />
+                        <MenuItem mnemonicParsing="false" text="Action 2" />
+                    </items>
+                    <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../pictures/more.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </MenuButton>
+            </children>
+        </GridPane>
+        <ImageView fx:id="picture" fitHeight="600.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../pictures/sampleImage.jpg" />
+            </image>
+        </ImageView>
+        <TextArea fx:id="text" editable="false" prefHeight="50.0" prefWidth="400.0" text="here is for text of post" />
+        <GridPane alignment="CENTER" hgap="10.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <TextField fx:id="comment" maxWidth="1.7976931348623157E308" promptText="Add Comment" />
+                <Button mnemonicParsing="false" GridPane.columnIndex="1">
+                    <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../pictures/send.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button layoutX="130.0" layoutY="9.0" mnemonicParsing="false" GridPane.columnIndex="3">
+                    <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../pictures/share.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <ToggleButton fx:id="like" mnemonicParsing="false" onAction="#doLike" GridPane.columnIndex="4">
+                    <graphic>
+                        <ImageView fx:id="likeImage" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../pictures/unlike.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </ToggleButton>
+            </children>
+        </GridPane>
+    </children>
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+</VBox>

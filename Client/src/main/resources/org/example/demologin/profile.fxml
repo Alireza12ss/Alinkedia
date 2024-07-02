@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.gleidson28.GNAvatarView?>
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
@@ -8,7 +10,6 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -18,9 +19,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demologin.ProfileController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="818.0" prefWidth="1367.0" style="-fx-background-color: #f4f2ee;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.Controllers.ProfileController">
     <top>
-        <GridPane hgap="20.0" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
+        <GridPane hgap="20.0" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #f4f2ee;" BorderPane.alignment="CENTER">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
@@ -45,102 +46,114 @@
             </BorderPane.margin>
         </GridPane>
     </top>
-   <center>
-      <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <content>
-            <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #f4f2ee;">
-               <children>
-                  <StackPane alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="214.0" prefWidth="570.0" style="-fx-background-color: #ffffff; -fx-background-radius: 25px;">
-                     <VBox.margin>
-                        <Insets left="15.0" top="15.0" />
-                     </VBox.margin>
-                     <children>
-                        <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="318.0" prefWidth="570.0">
-                           <children>
-                              <ImageView fitHeight="98.0" fitWidth="111.0" pickOnBounds="true" preserveRatio="true" style="-fx-scale-x: 5.7; -fx-image: ;" styleClass="borderImage.css">
-                                 <image>
-                                    <Image url="@../../../tic-tac-toe-seamless-background-on-dark-blue-illustration-vector.jpg" />
-                                 </image>
-                              </ImageView>
-                              <Label prefHeight="18.0" prefWidth="426.0" text="Alireza Safari">
+    <center>
+        <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="659.0" prefWidth="1255.0" BorderPane.alignment="TOP_CENTER">
+            <content>
+                <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="657.0" prefWidth="594.0" style="-fx-background-color: #f4f2ee;">
+                    <children>
+                        <StackPane alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="box" stylesheets="@../../../cssFiles/profileStyle.css">
+                            <VBox.margin>
+                                <Insets left="15.0" right="15.0" top="15.0" />
+                            </VBox.margin>
+                            <children>
+                                <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="572.0" style="-fx-background-color: white; -fx-background-radius: 20px;">
+                                    <children>
+                                      <ImageView fx:id="background" fitHeight="105.0" fitWidth="566.0" pickOnBounds="true" preserveRatio="true">
+                                 <viewport>
+                                    <Rectangle2D />
+                                 </viewport>
                                  <VBox.margin>
-                                    <Insets right="60.0" top="50.0" />
+                                    <Insets left="4.0" />
                                  </VBox.margin>
-                              </Label>
-                              <Label prefHeight="18.0" prefWidth="426.0" text="Student at Amirkabir University of Technology (AUT)">
-                                 <VBox.margin>
-                                    <Insets right="60.0" top="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Label prefHeight="18.0" prefWidth="426.0" text="Amirkabir University of Technology - Tehran Polytechnic">
-                                 <VBox.margin>
-                                    <Insets right="60.0" top="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Label contentDisplay="RIGHT" prefHeight="26.0" prefWidth="261.0" text="Tehran, Tehran Province, Iran .">
-                                 <VBox.margin>
-                                    <Insets left="28.0" right="250.0" top="5.0" />
-                                 </VBox.margin>
-                                 <graphic>
-                                    <Hyperlink alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Hyperlink" />
-                                 </graphic>
-                              </Label>
-                              <Hyperlink text="? Connections">
-                                 <VBox.margin>
-                                    <Insets right="390.0" top="5.0" />
-                                 </VBox.margin>
-                              </Hyperlink>
-                              <MenuButton mnemonicParsing="false" text="Open To">
-                                <items>
-                                  <MenuItem mnemonicParsing="false" text="hiring" />
-                                  <MenuItem mnemonicParsing="false" text="Finding new job" />
-                                    <MenuItem mnemonicParsing="false" text="Providing Service" />
-                                </items>
-                                 <VBox.margin>
-                                    <Insets right="390.0" top="5.0" />
-                                 </VBox.margin>
-                              </MenuButton>
-                           </children>
+                                      </ImageView>
+                                        <Label fx:id="description" alignment="TOP_LEFT" prefHeight="127.0" prefWidth="508.0" text="ds" wrapText="true">
+                                            <VBox.margin>
+                                                <Insets left="45.0" top="60.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <Hyperlink text="? Connections">
+                                            <VBox.margin>
+                                                <Insets left="45.0" top="5.0" />
+                                            </VBox.margin>
+                                        </Hyperlink>
+                                        <MenuButton mnemonicParsing="false" prefHeight="46.0" prefWidth="126.0" style="-fx-background-radius: 20px; -fx-border-radius: 20px;" text="Open To">
+                                            <items>
+                                                <MenuItem mnemonicParsing="false" text="hiring" />
+                                                <MenuItem mnemonicParsing="false" text="Finding new job" />
+                                                <MenuItem mnemonicParsing="false" text="Providing Service" />
+                                            </items>
+                                            <VBox.margin>
+                                                <Insets bottom="10.0" left="35.0" top="5.0" />
+                                            </VBox.margin>
+                                        </MenuButton>
+                                    </children>
+                                </VBox>
+                                <GNAvatarView fx:id="profile" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="120.0" prefWidth="135.0" stroke="BLACK" type="CIRCLE">
+                                    <StackPane.margin>
+                                        <Insets left="20.0" top="40.0" />
+                                    </StackPane.margin>
+                                </GNAvatarView>
+                            </children>
+                        </StackPane>
+                        <VBox alignment="TOP_CENTER" fillWidth="false" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: white;" styleClass="box" stylesheets="@../../../cssFiles/profileStyle.css">
+                            <VBox.margin>
+                                <Insets left="15.0" right="15.0" top="10.0" />
+                            </VBox.margin>
+                            <children>
+                                <Label alignment="CENTER" contentDisplay="RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="31.0" prefWidth="520.0" style="-fx-background-radius: 20px;" text="Posts                                                                      ">
+                                    <VBox.margin>
+                                        <Insets top="10.0" />
+                                    </VBox.margin>
+                                    <font>
+                                        <Font size="23.0" />
+                                    </font>
+                                    <graphic>
+                                        <Button alignment="CENTER" mnemonicParsing="false" text="Add Post" textAlignment="CENTER" />
+                                    </graphic>
+                                </Label>
+                                <GridPane prefHeight="203.0" prefWidth="572.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <VBox.margin>
+                                        <Insets top="10.0" />
+                                    </VBox.margin>
+                                </GridPane>
+                            </children>
                         </VBox>
-                        <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="88.0" prefWidth="91.0" style="-fx-background-radius: 40px; -fx-border-radius: 40px;">
-                           <StackPane.margin>
-                              <Insets right="430.0" top="50.0" />
-                           </StackPane.margin>
-                        </Button>
-                     </children>
-                  </StackPane>
-                  <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="332.0" prefWidth="572.0" style="-fx-background-color: #ffffff; -fx-background-radius: 25px;">
-                     <VBox.margin>
-                        <Insets left="15.0" right="15.0" top="10.0" />
-                     </VBox.margin>
+                  <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="273.0" prefWidth="579.0" style="-fx-background-color: white; -fx-background-radius: 20px;">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="44.0" prefWidth="537.0" text="Posts                                                              ">
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
+                        <Label alignment="CENTER" contentDisplay="RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="31.0" prefWidth="520.0" style="-fx-background-radius: 20px;" text="Educations                                                     ">
                            <font>
                               <Font size="23.0" />
                            </font>
                            <graphic>
-                              <Button mnemonicParsing="false" style="-fx-background-radius: 20px;" text="+" textAlignment="CENTER" />
+                              <Button alignment="CENTER" mnemonicParsing="false" text="Add Post" textAlignment="CENTER" />
                            </graphic>
-                        </Label>
-                        <GridPane prefHeight="203.0" prefWidth="572.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
-                        </GridPane>
+                        </Label>
                      </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <padding>
+                        <Insets left="15.0" right="15.0" />
+                     </padding>
                   </VBox>
-               </children>
-            </VBox>
-         </content>
-      </ScrollPane>
-   </center>
+                    </children>
+                    <padding>
+                        <Insets left="500.0" />
+                    </padding>
+                </VBox>
+            </content>
+            <BorderPane.margin>
+                <Insets />
+            </BorderPane.margin>
+        </ScrollPane>
+    </center>
 </BorderPane>
