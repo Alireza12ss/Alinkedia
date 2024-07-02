@@ -1,0 +1,5 @@
+.image-view-wrapper:imageview {
+    -fx-border-color: black;
+    -fx-border-style: solid;
+    -fx-border-width: 5;
+}

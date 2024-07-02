@@ -6,6 +6,9 @@
     -fx-font-size: 40;
     -fx-text-fill: indigo;
 }
+#sector{
+    -fx-font-size: 40;
+}
 .text-field{
     -fx-background-color: transparent;
     -fx-border-color: gray;
@@ -18,16 +21,17 @@
     -fx-border-width: 3;
 }
 .button{
-    -fx-background-color: indigo;
-    -fx-text-fill: white;
-    -fx-background-radius: 10;
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
     -fx-font-size: 15;
 }
 .button:hover{
-    -fx-background-color: purple;
+    -fx-background-color: #b2b8ff;
+    -fx-background-radius: 30;
 }
-.box{
+.text-area{
+    -fx-font-size: 15;
     -fx-border-color: gray;
-    -fx-border-radius: 20;
+    -fx-border-radius: 10;
     -fx-border-width: 3;
 }
