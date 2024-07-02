@@ -52,7 +52,7 @@
                                 <Image url="@../../../pictures/rvn.jpg" />
                             </image>
                         </ImageView>
-                        <GridPane alignment="TOP_CENTER" prefHeight="200.0" prefWidth="400.0">
+                        <GridPane fx:id="postListView" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="400.0">
                             <columnConstraints>
                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
                             </columnConstraints>
