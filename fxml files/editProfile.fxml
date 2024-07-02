@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<BorderPane prefHeight="800.0" stylesheets="@../../../editProfileStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demologin.EditProfile">
+<BorderPane prefHeight="800.0" stylesheets="@../../../editProfileStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demologin.EditProfileController">
    <center>
       <ScrollPane fitToHeight="true" fitToWidth="true">
          <content>
