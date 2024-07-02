@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+
+
+<VBox alignment="TOP_CENTER" prefWidth="360.0" spacing="10.0" stylesheets="@../../../messageStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="360.0" fitWidth="360.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../tic-tac-toe-seamless-background-on-dark-blue-illustration-vector.jpg" />
+         </image>
+      </ImageView>
+      <TextArea editable="false" text="jfskfslfsljfsljfsdfj;&#10;fjlfj;lsjflsfj" wrapText="true">
+         <VBox.margin>
+            <Insets left="10.0" right="10.0" />
+         </VBox.margin>
+      </TextArea>
+      <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="Time">
+         <VBox.margin>
+            <Insets right="10.0" />
+         </VBox.margin>
+      </Label>
+   </children>
+</VBox>

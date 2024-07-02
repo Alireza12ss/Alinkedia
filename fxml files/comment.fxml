@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.gleidson28.GNAvatarView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button graphicTextGap="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-alignment: left;" text="Person name">
+         <graphic>
+            <GNAvatarView maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" type="CIRCLE" />
+         </graphic>
+      </Button>
+      <DialogPane maxWidth="1.7976931348623157E308" />
+   </children>
+</VBox>
