@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" spacing="20.0" stylesheets="@../../../postStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demologin.PostController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" spacing="20.0" styleClass="root" stylesheets="@../../../postStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demologin.PostController">
    <children>
       <GridPane>
         <columnConstraints>
@@ -49,10 +49,13 @@
             </MenuButton>
          </children>
       </GridPane>
-      <ImageView fitHeight="600.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="600.0" fitWidth="596.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../sampleImage.jpg" />
          </image>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
       </ImageView>
       <TextArea editable="false" prefHeight="50.0" prefWidth="400.0" text="here is for text of post" />
       <GridPane alignment="CENTER" hgap="10.0">
