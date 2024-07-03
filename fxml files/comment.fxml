@@ -1,18 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.gleidson28.GNAvatarView?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-
 
 <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button graphicTextGap="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-alignment: left;" text="Person name">
-         <graphic>
-            <GNAvatarView maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" type="CIRCLE" />
-         </graphic>
-      </Button>
+      <GridPane>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Button graphicTextGap="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-alignment: left;" text="Person name">
+               <graphic>
+                  <GNAvatarView maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" type="CIRCLE" />
+               </graphic>
+            </Button>
+            <VBox spacing="10.0" GridPane.columnIndex="1">
+               <children>
+                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Date" />
+                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Time" />
+               </children>
+               <padding>
+                  <Insets right="10.0" top="10.0" />
+               </padding>
+            </VBox>
+         </children>
+      </GridPane>
       <DialogPane maxWidth="1.7976931348623157E308" />
    </children>
 </VBox>
