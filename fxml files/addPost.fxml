@@ -13,8 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox spacing="10.0" stylesheets="@../../../postStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox spacing="10.0" stylesheets="@../../../cssFiles/postStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane hgap="20.0">
         <columnConstraints>
@@ -26,7 +25,7 @@
           <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <GNAvatarView maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" type="CIRCLE" />
+            <GNAvatarView maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" stroke="BLACK" type="CIRCLE" />
             <Label text="Add new post" GridPane.columnIndex="1">
                <font>
                   <Font size="20.0" />
@@ -36,7 +35,7 @@
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../addImage.png" />
+                        <Image url="@../../../pictures/addImage.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -57,7 +56,7 @@
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../done.png" />
+                        <Image url="@../../../pictures/done.png" />
                      </image>
                   </ImageView>
                </graphic>
