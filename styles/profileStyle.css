@@ -25,11 +25,9 @@
 }
 .button:hover{
     -fx-background-color: purple;
-    -fx-scale-x: 1.2;
-    -fx-scale-y: 1.2;
 }
 .box{
-    -fx-background-color: #f0d6ff;
+    -fx-background-color: white;
     -fx-background-radius: 25;
 }
 .label{
