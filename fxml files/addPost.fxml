@@ -13,12 +13,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox spacing="10.0" stylesheets="@../../../cssFiles/postStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="postNode" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" spacing="10.0" stylesheets="@../../../cssFiles/postStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.Controllers.AddPostController">
    <children>
       <GridPane hgap="20.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
         </columnConstraints>
         <rowConstraints>
@@ -31,7 +32,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button mnemonicParsing="false" text="Add image" GridPane.columnIndex="2">
+            <Button fx:id="addMedia" mnemonicParsing="false" onAction="#selectMedia" text="Add image" GridPane.columnIndex="3">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -40,8 +41,18 @@
                   </ImageView>
                </graphic>
             </Button>
+            <Button fx:id="cancel" layoutX="464.0" layoutY="18.0" mnemonicParsing="false" onAction="#cancelAction" text="Cancel" GridPane.columnIndex="2">
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../pictures/cancel.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </GridPane>
+      <ImageView fx:id="media" fitHeight="600.0" fitWidth="596.0" pickOnBounds="true" preserveRatio="true" />
       <GridPane hgap="10.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -52,7 +63,7 @@
          </rowConstraints>
          <children>
             <TextArea prefRowCount="2" promptText="Write here..." />
-            <Button mnemonicParsing="false" GridPane.columnIndex="1">
+            <Button fx:id="done" mnemonicParsing="false" GridPane.columnIndex="1">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
