@@ -9,7 +9,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1209.0" style="-fx-background-color: #f4f2ee;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demologin.ProfileController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" style="-fx-background-color: #f4f2ee;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.Controllers.ProfileController">
     <top>
         <GridPane hgap="20.0" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #f4f2ee;" BorderPane.alignment="CENTER">
             <columnConstraints>
@@ -34,7 +34,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" text="\@" />
+                <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#goToFeed" text="&lt;" />
                 <Label fx:id="title" alignment="CENTER" text="Alinkedia" GridPane.columnIndex="1" />
                 <TextField promptText="Search" GridPane.columnIndex="2" />
                 <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#backToLogin" text="Log out" GridPane.columnIndex="3" />
@@ -47,95 +47,139 @@
         </GridPane>
     </top>
     <center>
-        <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="TOP_CENTER">
+        <ScrollPane fitToHeight="true" fitToWidth="true" BorderPane.alignment="TOP_CENTER">
             <content>
-                <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="657.0" prefWidth="594.0" style="-fx-background-color: #f4f2ee;">
-                    <children>
-                        <StackPane alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="box" stylesheets="@../../../profileStyle.css">
-                            <VBox.margin>
-                                <Insets left="15.0" right="15.0" top="15.0" />
-                            </VBox.margin>
-                            <children>
-                                <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="572.0" style="-fx-background-color: white; -fx-background-radius: 20px;">
-                                    <children>
-                                        <Label fx:id="description" alignment="TOP_LEFT" prefHeight="220.0" prefWidth="514.0" text="ds" wrapText="true">
-                                            <VBox.margin>
-                                                <Insets left="35.0" top="170.0" />
-                                            </VBox.margin>
-                                        </Label>
-                                        <Hyperlink text="? Connections">
-                                            <VBox.margin>
-                                                <Insets left="45.0" top="5.0" />
-                                            </VBox.margin>
-                                        </Hyperlink>
-                                        <MenuButton mnemonicParsing="false" prefHeight="46.0" prefWidth="126.0" style="-fx-background-radius: 20px; -fx-border-radius: 20px;" text="Open To">
-                                            <items>
-                                                <MenuItem mnemonicParsing="false" text="hiring" />
-                                                <MenuItem mnemonicParsing="false" text="Finding new job" />
-                                                <MenuItem mnemonicParsing="false" text="Providing Service" />
-                                            </items>
-                                            <VBox.margin>
-                                                <Insets bottom="10.0" left="25.0" top="5.0" />
-                                            </VBox.margin>
-                                        </MenuButton>
-                                    </children>
-                                </VBox>
-                                <ImageView fitHeight="98.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true" style="-fx-scale-x: 5.8;" styleClass="borderImage.css">
-                                    <image>
-                                        <Image url="@../../../tic-tac-toe-seamless-background-on-dark-blue-illustration-vector.jpg" />
-                                    </image>
-                                    <StackPane.margin>
-                                        <Insets left="237.0" />
-                                    </StackPane.margin>
-                                </ImageView>
-                                <GNAvatarView maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="134.0" prefWidth="149.0" type="CIRCLE">
-                                    <image>
-                                        <Image url="@../../../sampleImage.jpg" />
-                                    </image>
-                                    <StackPane.margin>
-                                        <Insets left="20.0" top="30.0" />
-                                    </StackPane.margin>
-                                </GNAvatarView>
-                            </children>
-                        </StackPane>
-                        <VBox alignment="TOP_CENTER" fillWidth="false" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: white;" styleClass="box" stylesheets="@../../../profileStyle.css">
-                            <VBox.margin>
-                                <Insets left="15.0" right="15.0" top="10.0" />
-                            </VBox.margin>
-                            <children>
-                                <Label alignment="CENTER" contentDisplay="RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-radius: 20px;" text="Posts                                                              ">
-                                    <VBox.margin>
-                                        <Insets top="10.0" />
-                                    </VBox.margin>
-                                    <font>
-                                        <Font size="23.0" />
-                                    </font>
-                                    <graphic>
-                                        <Button alignment="CENTER" mnemonicParsing="false" text="Add Post" textAlignment="CENTER" />
-                                    </graphic>
-                                </Label>
-                                <GridPane prefHeight="203.0" prefWidth="572.0">
-                                    <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    </rowConstraints>
-                                    <VBox.margin>
-                                        <Insets top="10.0" />
-                                    </VBox.margin>
-                                </GridPane>
-                            </children>
+            <GridPane alignment="TOP_CENTER">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                      <VBox alignment="TOP_CENTER" prefWidth="800.0" spacing="20.0" style="-fx-background-color: #f4f2ee;">
+                          <children>
+                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Edit profile" />
+                              <StackPane alignment="TOP_LEFT" styleClass="box" stylesheets="@../../../cssFiles/profileStyle.css">
+                           <children>
+                              <ImageView fx:id="backgroundImage" fitHeight="300.0" fitWidth="800.0" pickOnBounds="true" />
+                                      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-radius: 20px;">
+                                          <children>
+                                            <GNAvatarView fx:id="profile" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" stroke="BLACK" type="CIRCLE">
+                                       <VBox.margin>
+                                          <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+                                       </VBox.margin>
+                                            </GNAvatarView>
+                                              <Label fx:id="description" alignment="TOP_LEFT" prefHeight="127.0" prefWidth="508.0" text="ds" wrapText="true">
+                                                  <VBox.margin>
+                                                      <Insets left="45.0" top="60.0" />
+                                                  </VBox.margin>
+                                              </Label>
+                                              <Hyperlink text="? Connections">
+                                                  <VBox.margin>
+                                                      <Insets left="45.0" top="5.0" />
+                                                  </VBox.margin>
+                                              </Hyperlink>
+                                              <MenuButton mnemonicParsing="false" prefHeight="46.0" prefWidth="126.0" style="-fx-background-radius: 20px; -fx-border-radius: 20px;" text="Open To">
+                                                  <items>
+                                                      <MenuItem mnemonicParsing="false" text="hiring" />
+                                                      <MenuItem mnemonicParsing="false" text="Finding new job" />
+                                                      <MenuItem mnemonicParsing="false" text="Providing Service" />
+                                                  </items>
+                                                  <VBox.margin>
+                                                      <Insets bottom="10.0" left="35.0" top="5.0" />
+                                                  </VBox.margin>
+                                              </MenuButton>
+                                          </children>
+                                      </VBox>
+                           </children>
+                              </StackPane>
+                              <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" spacing="20.0" style="-fx-background-color: white;" styleClass="box" stylesheets="@../../../cssFiles/profileStyle.css">
+                                  <children>
+                              <GridPane maxWidth="1.7976931348623157E308">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                            <Label alignment="TOP_LEFT" contentDisplay="RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-radius: 20px;" text="Posts">
+                                                <font>
+                                                    <Font size="23.0" />
+                                                </font>
+                                            </Label>
+                                              <Button alignment="CENTER" mnemonicParsing="false" text="Add Post" textAlignment="CENTER" GridPane.columnIndex="1" />
+                                 </children>
+                              </GridPane>
+                                      <GridPane>
+                                          <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          </columnConstraints>
+                                          <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          </rowConstraints>
+                                      </GridPane>
+                                  </children>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
+                              </VBox>
+                        <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 20px;">
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
+                           <children>
+                              <GridPane maxWidth="1.7976931348623157E308">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label alignment="TOP_LEFT" contentDisplay="RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-radius: 20px;" text="Education">
+                                       <font>
+                                          <Font size="23.0" />
+                                       </font>
+                                    </Label>
+                                    <Button alignment="CENTER" mnemonicParsing="false" text="Add Post" textAlignment="CENTER" GridPane.columnIndex="1" />
+                                 </children>
+                              </GridPane>
+                              <GridPane>
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                              </GridPane>
+                           </children>
                         </VBox>
-                    </children>
-                    <padding>
-                        <Insets left="500.0" />
-                    </padding>
-                </VBox>
+                          </children>
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding>
+                      </VBox>
+               </children>
+            </GridPane>
             </content>
             <BorderPane.margin>
                 <Insets />
             </BorderPane.margin>
         </ScrollPane>
     </center>
+   <right>
+      <VBox spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <TitledPane prefHeight="200.0" prefWidth="200.0" text="Other similar profiles" />
+            <TitledPane prefHeight="200.0" prefWidth="200.0" text="People you may know" />
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </BorderPane.margin>
+      </VBox>
+   </right>
 </BorderPane>
