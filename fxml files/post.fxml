@@ -21,6 +21,7 @@
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
             </columnConstraints>
             <rowConstraints>
@@ -36,7 +37,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <MenuButton alignment="CENTER" mnemonicParsing="false" GridPane.columnIndex="2">
+                <MenuButton alignment="CENTER" mnemonicParsing="false" GridPane.columnIndex="3">
                     <items>
                         <MenuItem mnemonicParsing="false" text="Action 1" />
                         <MenuItem mnemonicParsing="false" text="Action 2" />
@@ -50,6 +51,15 @@
                     </graphic>
                 </MenuButton>
             <Label text="Date &amp; time" GridPane.columnIndex="1" />
+            <Button mnemonicParsing="false" text="Follow" GridPane.columnIndex="2">
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../pictures/plus.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
             </children>
         </GridPane>
         <ImageView fitHeight="600.0" fitWidth="596.0" pickOnBounds="true" preserveRatio="true">
