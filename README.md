@@ -1,3 +1,3 @@
-### Alinkedia, an Unofficial Simulation of LinkedIn
+# Alinkedia, an Unofficial Simulation of LinkedIn
 
 Welcome to our project !
