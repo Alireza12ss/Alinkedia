@@ -11,6 +11,8 @@ This project is a simplified version of LinkedIn, developed as part of an Advanc
 
 ### Data base
 
+### Single Sign On 
+
 ## People Communication
 
 ### Posts & Comments
