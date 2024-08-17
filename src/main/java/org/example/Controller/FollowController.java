@@ -2,10 +2,11 @@ package org.example.Controller;
 
 import org.example.DataBaseHandler.FollowDAO;
 
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class FollowController extends Controller{
-    public static String follow(String followerEmail, String followingEmail){
+    public static String follow(String followerEmail, String followingEmail) throws SQLException {
         return FollowDAO.follow(followerEmail , followingEmail);
     }
 

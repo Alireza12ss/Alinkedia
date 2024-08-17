@@ -1,6 +1,9 @@
 package org.example.Controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.DataBaseHandler.LikeDAO;
 import org.example.DataBaseHandler.UserDAO;
 import org.example.Model.User;
 
@@ -21,8 +24,8 @@ public class UserController extends Controller{
 
     }
 
-    public String login(String email , String pass)  {
-        String str;
+    public User login(String email , String pass)  {
+        User str;
         try {
             str = UserDAO.login(email , pass);
         } catch (SQLException e) {
@@ -41,8 +44,19 @@ public class UserController extends Controller{
         }
     }
 
-    public String searchUser(String firstName , String lastName) throws SQLException {
-        return Objects.requireNonNull(UserDAO.searchUsers(firstName, lastName)).toString();
+    public String searchUser(String firstName , String lastName) throws SQLException, JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(UserDAO.searchUsers(firstName , lastName)).toString();
+    }
+
+    public User getUniqueUser(String email) throws SQLException {
+        return UserDAO.getUniqueUser(email);
+    }
+
+    public String updateUser(String email , String firstName, String lastName, String additionalName , String title, String imagePathProfile,
+                             String imagePathBackground, String country, String city, String profession , String birthday){
+        return UserDAO.updateProfile(email , firstName, lastName, additionalName, title, imagePathProfile, imagePathBackground,
+                country , city, profession, birthday);
     }
 
 }
