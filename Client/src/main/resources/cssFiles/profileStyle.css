@@ -25,11 +25,9 @@
 }
 .button:hover{
     -fx-background-color: purple;
-    -fx-scale-x: 1.2;
-    -fx-scale-y: 1.2;
 }
 .box{
-    -fx-background-color: #f0d6ff;
+    -fx-background-color: white;
     -fx-background-radius: 25;
 }
 .label{
@@ -43,9 +41,8 @@
     -fx-background-radius: 30;
 }
 .menu-button:focused{
-    -fx-border-color: #b2b8ff;
-    -fx-border-radius: 30;
-    -fx-border-width: 3;
+    -fx-background-color: #b2b8ff;
+    -fx-background-radius: 30;
 }
 .menu-item:hover{
     -fx-background-color: indigo;
@@ -54,4 +51,44 @@
 .menu-item:focused{
     -fx-background-color: indigo;
     -fx-text-fill: white;
+}
+.toggle-button{
+    -fx-border-color: indigo;
+    -fx-border-radius: 10;
+    -fx-font-size: 15;
+    -fx-background-color: transparent;
+    -fx-background-radius: 10;
+}
+.toggle-button:hover{
+    -fx-background-color: #b2b8ff;
+}
+.toggle-button:selected{
+    -fx-background-color: indigo;
+    -fx-text-fill: white;
+    -fx-font-size: 15;
+}
+#connect{
+    -fx-background-color: transparent;
+    -fx-border-color: indigo;
+    -fx-border-radius: 10;
+    -fx-font-size: 15;
+    -fx-text-fill: black;
+    -fx-background-radius: 10;
+}
+#connect:hover{
+    -fx-background-color: #b2b8ff;
+}
+.titled-pane{
+    -fx-text-fill: white;
+}
+.title{
+    -fx-background-color: indigo;
+    -fx-background-radius: 15 15 0 0;
+    -fx-font-size: 20;
+}
+.titled-pane .title .arrow-button .arrow{
+    -fx-background-color: white;
+}
+.scroll-pane{
+    -fx-background-color: transparent;
 }

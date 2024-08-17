@@ -27,7 +27,39 @@
     -fx-background-color: purple;
 }
 .box{
+    -fx-background-color: white;
+    -fx-background-radius: 25;
+    -fx-border-radius: 25;
     -fx-border-color: gray;
-    -fx-border-radius: 20;
-    -fx-border-width: 3;
+}
+.scroll-pane{
+    -fx-background-color: transparent;
+}
+.tab-pane{
+    -fx-tab-min-width: 150;
+    -fx-font-size: 20;
+}
+.tab-pane .tab-label{
+    -fx-text-fill: white;
+}
+.tab-pane .tab{
+    -fx-background-color: dimgray;
+    -fx-text-fill: white;
+    -fx-background-radius: 20 20 0 0;
+    -fx-border-color: transparent;
+}
+.tab-pane .tab:selected{
+    -fx-background-color: indigo;
+    -fx-text-fill: white;
+}
+.titled-pane{
+    -fx-text-fill: white;
+}
+.title{
+    -fx-background-color: indigo;
+    -fx-background-radius: 15 15 0 0;
+    -fx-font-size: 20;
+}
+.titled-pane .title .arrow-button .arrow{
+    -fx-background-color: white;
 }

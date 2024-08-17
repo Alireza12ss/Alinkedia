@@ -1,6 +1,14 @@
+.root{
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-border-width: 2;
+    -fx-border-color: #b2b8ff;
+    -fx-border-radius: 15;
+}
 .button{
     -fx-background-color: transparent;
     -fx-text-fill: black;
+    -fx-font-size: 15;
 }
 .button:hover{
     -fx-background-color: #b2b8ff;
@@ -12,7 +20,10 @@
 }
 .toggle-button{
     -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
     -fx-text-fill: black;
+    -fx-font-size: 15;
 }
 .toggle-button:hover{
     -fx-background-color: #b2b8ff;
@@ -26,9 +37,8 @@
     -fx-background-radius: 30;
 }
 .menu-button:focused{
-    -fx-border-color: #b2b8ff;
-    -fx-border-radius: 30;
-    -fx-border-width: 3;
+    -fx-background-color: #b2b8ff;
+    -fx-background-radius: 30;
 }
 .menu-item:hover{
     -fx-background-color: indigo;
@@ -37,4 +47,7 @@
 .menu-item:focused{
     -fx-background-color: indigo;
     -fx-text-fill: white;
+}
+.label{
+    -fx-font-size: 12;
 }
