@@ -1,9 +1,10 @@
 package org.example.DataBaseHandler;
 
+import java.net.ConnectException;
 import java.sql.*;
 
 public class DAO {
-    public static Connection CreateConnection(){
+    public static Connection CreateConnection() {
         String url = "jdbc:mysql://localhost:3306/projectdb";
         String username = "root";
         String password = "";
@@ -12,10 +13,9 @@ public class DAO {
 
             return DriverManager.getConnection(url , username , password);
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
     public static int personId(String email){
@@ -29,8 +29,11 @@ public class DAO {
             ResultSet set = statement.executeQuery();
 
             if (set.next()) {
-                return set.getInt("id");
+                int tmp = set.getInt("id");
+                connection.close();
+                return tmp;
             }
+            connection.close();
             return 0;
         }catch (SQLException e){
             e.printStackTrace();
@@ -51,8 +54,11 @@ public class DAO {
             ResultSet set = statement.executeQuery();
 
             if (set.next()) {
-                return set.getString("email");
+                String tmp = set.getString("email");
+                connection.close();
+                return tmp;
             }
+            connection.close();
             return null;
         }catch (SQLException e){
             e.printStackTrace();

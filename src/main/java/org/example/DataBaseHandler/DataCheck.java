@@ -93,7 +93,7 @@ public class DataCheck {
 
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
             cipher.init(Cipher.DECRYPT_MODE, keySpec, iv);
-
+            System.out.println(encryptedPassword);
             byte[] original = cipher.doFinal(Base64.getDecoder().decode(encryptedPassword));
 
             return new String(original);

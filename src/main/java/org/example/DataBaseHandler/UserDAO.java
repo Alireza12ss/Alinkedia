@@ -1,5 +1,7 @@
 package org.example.DataBaseHandler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.Handler.UserHandler;
 import org.example.JWTgenerator.JwtGenerator;
 import org.example.Model.User;
 
@@ -26,13 +28,18 @@ public class UserDAO extends DAO {
                 pstmt.setString(3 , email);
             }else {
                 pstmt.close();
+                UserHandler.setResponseCode(406);
                 return "invalid email";
             }
             //check password
-            if (DataCheck.CheckPass(pass)){
+            if (pass.equals("GitHub Login")){
+                pstmt.setString(4 , "GitHub Login");
+            }
+            else if (DataCheck.CheckPass(pass)){
                 String encryptPass = DataCheck.encrypt(pass);
                 pstmt.setString(4 , encryptPass);
             }else {
+                UserHandler.setResponseCode(406);
                 pstmt.close();
                 return "invalid pass\n" + pass +
                         "your password should contain at least 8 digits or letters";
@@ -40,12 +47,23 @@ public class UserDAO extends DAO {
 
             if (DataCheck.uniqueEmail(email)) {
                 pstmt.executeUpdate();
+                UserHandler.setResponseCode(201);
+                HashMap<String, Object> claims = new HashMap<>();
 
-                return "User sign up";
+                claims.put("email", email);
+
+                JwtGenerator generator = new JwtGenerator();
+                UserHandler.setResponseCode(202);
+                User user = getUniqueUser(email);
+                user.setToken(generator.createToken(claims, 60));
+                System.out.println(user.getToken());
+                ObjectMapper mapper = new ObjectMapper();
+                String json = mapper.writeValueAsString(user);
+                return json;
             }else {
+                UserHandler.setResponseCode(403);
                 return "this email already have account";
             }
-
         }catch (SQLIntegrityConstraintViolationException e){
             e.printStackTrace();
             return "Primary key constraint violated";
@@ -58,7 +76,7 @@ public class UserDAO extends DAO {
 
     }
 
-    public static String login(String email , String pass) throws SQLException {
+    public static User login(String email , String pass) throws SQLException {
         String sql = "Select * From users where email = ?";
 
         try {
@@ -68,8 +86,9 @@ public class UserDAO extends DAO {
             statement.setString(1 , email);
             ResultSet set = statement.executeQuery();
             if (set.next()) {
-                if (!Objects.requireNonNull(DataCheck.decrypt(set.getString("password"))).equals(pass)){
-                    return "invalid pass!";
+                if (!pass.equals("GitHub Login") && !Objects.requireNonNull(set.getString("password").equals(DataCheck.encrypt(pass)))){
+                    UserHandler.setResponseCode(406);
+                    return null;
                 }
 
                 HashMap<String, Object> claims = new HashMap<>();
@@ -77,10 +96,15 @@ public class UserDAO extends DAO {
                 claims.put("email", email);
 
                 JwtGenerator generator = new JwtGenerator();
-
-                return generator.createToken(claims, 24);
+                UserHandler.setResponseCode(202);
+                User user = getUniqueUser(email);
+                user.setToken(generator.createToken(claims, 60));
+                System.out.println(user.getToken());
+                connection.close();
+                return user;
             }else {
-                return "User not found";
+                UserHandler.setResponseCode(404);
+                return null;
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -96,30 +120,31 @@ public class UserDAO extends DAO {
     public static String showProfile(String email) throws SQLException {
         User user = getUniqueUser(email);
         assert user != null;
-        return user.showProfile();
+        return user.toString();
     }
 
-    public String updateProfile(String email , String additionalName , String title , String imagePathProfile ,
-                                String imagePathBackground , String country , String city , String profession ){
+    public static String updateProfile(String email , String firstName, String lastName, String additionalName , String title, String imagePathProfile,
+                                       String imagePathBackground, String country, String city, String profession  , String birthday){
 
-        String sql = "UPDATE users SET additionalName = ? , title = ? ,imagePathProfile = ?" +
-                " ,imagePathBackground = ? ,country = ? ,city = ? ,profession = ?  WHERE email = ?;";
+        String sql = "UPDATE users SET firstName = ?, lastName = ?, additionalName = ?, title = ?, imagePathProfile = ?, imagePathBackground = ?, country = ?, city = ?, profession = ?, birthday = ? WHERE email = ?";
 
         try {
             Connection connection = DAO.CreateConnection();
-
             assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1,additionalName);
-            statement.setString(2,title);
-            statement.setString(3,imagePathProfile);
-            statement.setString(4,imagePathBackground);
-            statement.setString(5,country);
-            statement.setString(6,city);
-            statement.setString(7,profession);
-            statement.setString(8,email);
+            statement.setString(1, firstName);
+            statement.setString(2, lastName);
+            statement.setString(3, additionalName);
+            statement.setString(4, title);
+            statement.setString(5, imagePathProfile);
+            statement.setString(6, imagePathBackground);
+            statement.setString(7, country);
+            statement.setString(8, city);
+            statement.setString(9, profession);
+            statement.setDate(10, birthday.equals("") ? null : Date.valueOf(birthday));
+            statement.setString(11, email);
 
-            statement.executeQuery(sql);
+            statement.executeUpdate();
 
             return "User Updated";
         }catch (SQLException e){
@@ -149,6 +174,7 @@ public class UserDAO extends DAO {
             statement.setInt(1 , jobId);
             statement.setString(2 , email);
             statement.executeUpdate();
+            connection.close();
         }catch (SQLException e){
             e.printStackTrace();
         } catch (Exception e) {
@@ -233,7 +259,7 @@ public class UserDAO extends DAO {
 
                 users.add(user);
             }
-
+            connection.close();
             return users;
         }catch (SQLException e){
             e.printStackTrace();
@@ -269,6 +295,7 @@ public class UserDAO extends DAO {
 
                 users.add(user);
             }
+            connection.close();
 
             return users;
         }catch (SQLException e){
@@ -303,7 +330,9 @@ public class UserDAO extends DAO {
                         set.getString("imagePathBackground"),
                         set.getString("country"),
                         set.getString("city"),
-                        set.getString("profession"));
+                        set.getString("profession"),
+                        set.getString("password"));
+                connection.close();
                 return user;
             }
             return null;

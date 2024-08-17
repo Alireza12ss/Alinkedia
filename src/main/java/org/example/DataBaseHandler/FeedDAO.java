@@ -1,5 +1,6 @@
 package org.example.DataBaseHandler;
 
+import org.example.Handler.FeedHandler;
 import org.example.Model.Post;
 import org.example.Model.User;
 
@@ -14,6 +15,8 @@ public class FeedDAO {
         for(User user : users){
             posts.addAll(PostDAO.getPosts(user.getEmail()));
         }
+        posts.addAll(PostDAO.getPosts(DAO.personEmail(id)));
+        FeedHandler.setResponseCodeFeedHandler(200);
         return posts;
     }
 

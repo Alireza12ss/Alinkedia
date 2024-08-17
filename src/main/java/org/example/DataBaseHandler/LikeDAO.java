@@ -1,5 +1,6 @@
 package org.example.DataBaseHandler;
 
+import org.example.Handler.PostHandler;
 import org.example.Model.Post;
 import org.example.Model.User;
 
@@ -24,6 +25,7 @@ public class LikeDAO {
             while (set.next()) {
                 posts.add(PostDAO.getPost(set.getInt("postId")));
             }
+            connection.close();
             return posts;
         }catch (SQLException e){
             e.printStackTrace();
@@ -44,9 +46,13 @@ public class LikeDAO {
             while (set.next()) {
                 users.add(UserDAO.getUniqueUser(personEmail(set.getInt("likerId"))));
             }
+            System.out.println(users);
+            PostHandler.setResponseCodePostHandler(200);
+            connection.close();
             return users;
         }catch (SQLException e){
             e.printStackTrace();
+            PostHandler.setResponseCodePostHandler(400);
             return null;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -67,6 +73,7 @@ public class LikeDAO {
             statement.setInt(1 , personId(email));
             statement.setInt(2 , postId);
             statement.executeUpdate();
+            connection.close();
             return "liked!";
         }catch (SQLException e){
             e.printStackTrace();
@@ -84,6 +91,7 @@ public class LikeDAO {
             statement.setInt(1 , personId(email));
             statement.setInt(2 , postId);
             statement.executeUpdate();
+            connection.close();
             return "like deleted!";
         }catch (SQLException e){
             e.printStackTrace();
