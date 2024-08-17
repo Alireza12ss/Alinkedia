@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.gleidson28.GNAvatarView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="800.0" stylesheets="@../../../cssFiles/editProfileStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.Controllers.EditProfileController">
+    <center>
+        <ScrollPane fitToHeight="true" fitToWidth="true">
+            <content>
+                <VBox spacing="20.0">
+                    <children>
+                        <StackPane fx:id="backImage">
+                            <children>
+                                <BorderPane>
+                                    <left>
+                                        <Button mnemonicParsing="false" onAction="#selectImage" style="-fx-background-radius: 100%;" BorderPane.alignment="CENTER">
+                                 <graphic>
+                                              <GNAvatarView fx:id="profileImage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" type="CIRCLE" />
+                                 </graphic>
+                                        </Button>
+                                    </left>
+                                    <right>
+                                        <Button mnemonicParsing="false" onAction="#selectBackImage" style="-fx-background-radius: 100%; -fx-background-color: white;" BorderPane.alignment="TOP_CENTER">
+                                            <graphic>
+                                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="@../../../pictures/pencil.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                 <BorderPane.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </BorderPane.margin>
+                                        </Button>
+                                    </right>
+                                </BorderPane>
+                            </children>
+                        </StackPane>
+                        <Label text="First name" />
+                        <TextField fx:id="firstNameLabel" />
+                        <Label text="Last name" />
+                        <TextField fx:id="lastNameLabel" />
+                  <Label text="Additional name" />
+                  <TextField fx:id="AdditionalName" />
+                        <Label text="Description" />
+                        <TextArea fx:id="descriptionLabel" prefRowCount="3" wrapText="true" />
+                  <Label text="Country" />
+                  <TextField fx:id="countryLabel" />
+                  <Label text="City" />
+                  <TextField fx:id="cityLabel" />
+                  <Label text="Personal info" />
+                  <TextField promptText="Phone number" />
+                  <TextField promptText="Phone type" />
+                  <TextField promptText="Address" />
+                  <DatePicker fx:id="birthday" maxWidth="1.7976931348623157E308" promptText="Birthday in MM/dd/YYYY" />
+                        <Label text="Current position" />
+                        <Hyperlink text="Add new position" />
+                        <Label text="Industry" />
+                        <TextField fx:id="industryLabel" />
+                        <Label text="Education" />
+                        <Label text="School" />
+                        <TextField fx:id="schoolLabel" />
+                    </children>
+                    <padding>
+                        <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+                    </padding>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+    <top>
+        <GridPane alignment="CENTER" hgap="80.0" BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Button mnemonicParsing="false" onAction="#BackToProfile" text="Cancel">
+                    <graphic>
+                        <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../pictures/cancel.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="save" mnemonicParsing="false" onAction="#saveChanges" text="Save" GridPane.columnIndex="1">
+                    <graphic>
+                        <ImageView fx:id="savePhoto" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../pictures/done.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="20.0" />
+            </BorderPane.margin>
+        </GridPane>
+    </top>
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+</BorderPane>

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.Controllers.SignUpController">
+<VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="553.0" prefWidth="500.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.Controllers.SignUpController">
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
@@ -46,6 +46,7 @@
       </GridPane>
       <Label fx:id="error" alignment="CENTER" contentDisplay="CENTER" text="Password must have at least 8 character containing letter and digit" textAlignment="CENTER" />
       <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#submit" text="Submit" textAlignment="CENTER" />
+      <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#SSOLogin" text="Sign up with GitHub" textAlignment="CENTER" />
       <Button mnemonicParsing="false" onAction="#backToLogin" text="back to login" />
    </children>
 </VBox>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.gleidson28.GNAvatarView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+        <GridPane alignment="CENTER" hgap="20.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+                <ColumnConstraints hgrow="SOMETIMES" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Button mnemonicParsing="false" text="&lt;" />
+                <Label fx:id="title" text="Alinkedia" GridPane.columnIndex="1" />
+                <Label fx:id="sector" text="Messaging" GridPane.columnIndex="2" />
+                <TextField maxWidth="1.7976931348623157E308" promptText="Search Messages" GridPane.columnIndex="3" />
+                <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="4" />
+                <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="5" />
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="20.0" />
+            </BorderPane.margin>
+        </GridPane>
+    </top>
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <left>
+        <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <tabs>
+                <Tab text="All">
+                    <content>
+                        <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
+                            <content>
+                                <GridPane gridLinesVisible="true">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                </GridPane>
+                            </content>
+                        </ScrollPane>
+                    </content>
+                </Tab>
+                <Tab text="Unread" />
+            </tabs>
+        </TabPane>
+    </left>
+    <center>
+        <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <top>
+                  <Button fx:id="userName" alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goToProfile" text="Man with Bear">
+               <graphic>
+                  <GNAvatarView fx:id="profileImage" prefHeight="50.0" prefWidth="50.0" type="CIRCLE" />
+               </graphic>
+            </Button>
+            </top>
+            <bottom>
+                <GridPane hgap="20.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <TextArea fx:id="messageText" prefRowCount="1" GridPane.columnIndex="1" />
+                        <Button fx:id="send" mnemonicParsing="false" GridPane.columnIndex="2">
+                            <graphic>
+                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../../pictures/send.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button fx:id="selecterMedia" layoutX="223.0" layoutY="13.0" mnemonicParsing="false">
+                            <graphic>
+                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../../pictures/clip.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button layoutX="10.0" layoutY="13.0" mnemonicParsing="false" GridPane.columnIndex="3">
+                            <graphic>
+                                <ImageView fx:id="sendVoices" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../../pictures/mic.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                    </children>
+                    <BorderPane.margin>
+                        <Insets left="20.0" />
+                    </BorderPane.margin>
+                </GridPane>
+            </bottom>
+            <center>
+                <ScrollPane fx:id="messageList" fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="BOTTOM_CENTER">
+               <content>
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                  </GridPane>
+               </content></ScrollPane>
+            </center>
+        </BorderPane>
+    </center>
+</BorderPane>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.gleidson28.GNAvatarView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.Controllers.PersonController">
+    <children>
+        <Button fx:id="name" graphicTextGap="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goOtherProfile" style="-fx-alignment: left; -fx-font-size: 20;" stylesheets="@../../../cssFiles/postStyle.css" text="Person name">
+            <graphic>
+                <GNAvatarView fx:id="profile" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="60.0" type="CIRCLE">
+                    <image>
+                        <Image url="@../../../pictures/sampleImage.jpg" />
+                    </image>
+                </GNAvatarView>
+            </graphic>
+        </Button>
+    </children>
+</VBox>
