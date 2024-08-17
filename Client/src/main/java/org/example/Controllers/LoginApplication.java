@@ -7,7 +7,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
 public class LoginApplication extends Application {
     public final static String url = "http://localhost:8888";
     @Override

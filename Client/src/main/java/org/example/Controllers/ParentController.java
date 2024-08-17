@@ -14,7 +14,7 @@ import org.example.Model.User;
 import java.io.*;
 
 public class ParentController {
-    static User user;
+    User user;
     public static void transfer(FXMLLoader fxmlLoader, String styleSheet, ActionEvent event){
         System.out.println(styleSheet);
         Node node = ((Node) event.getSource());
@@ -58,7 +58,7 @@ public class ParentController {
         transfer(fxmlLoader, String.valueOf(LoginController.class.getResource("/cssFiles/feedStyle.css")) , event);
     }
     @FXML
-    public static void goToFeedp(Label label) throws IOException {
+    public static void goToFeedp(Label label) {
         FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("demoFeed.fxml"));
         transferp(fxmlLoader, String.valueOf(LoginController.class.getResource("/cssFiles/feedStyle.css")) , label);
     }

@@ -5,20 +5,25 @@ import com.google.gson.JsonObject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import org.example.Model.User;
+import org.json.JSONObject;
+
+import java.awt.*;
+import java.io.*;
+import java.net.*;
 import java.nio.charset.StandardCharsets;
+import java.sql.Time;
+import java.time.LocalTime;
 
 import static org.example.Controllers.LoginApplication.url;
-import static org.example.Controllers.ParentController.goToFeed;
-import static org.example.Controllers.ParentController.transfer;
+import static org.example.Controllers.ParentController.*;
 
 public class SignUpController {
+    static User user;
     @FXML
     private Label error;
     @FXML
@@ -60,6 +65,10 @@ public class SignUpController {
                 password.setStyle("-fx-text-fill: black");
                 repeatPassword.setStyle("-fx-text-fill: black");
                 if (sendPostRequest()) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setHeaderText("Sign up completed !");
+                    alert.show();
+
                     goToFeed(event);
                 }
             } else {
@@ -72,8 +81,8 @@ public class SignUpController {
     }
 
     private boolean sendPostRequest() throws IOException {
-        JsonObject jsonObject = new JsonObject();
-        jsonToObjectOne(jsonObject , firstName.getText() , lastName.getText()
+        JsonObject jsonObjectq = new JsonObject();
+        jsonToObjectOne(jsonObjectq , firstName.getText() , lastName.getText()
                         , inputEmail.getText() , firstPass.getText());
         // URL of the server endpoint
         // Create HttpURLConnection object
@@ -84,7 +93,7 @@ public class SignUpController {
         // Enable output and write JSON data
         connection.setDoOutput(true);
         try (OutputStream os = connection.getOutputStream()) {
-            byte[] input = jsonObject.toString().getBytes(StandardCharsets.UTF_8);
+            byte[] input = jsonObjectq.toString().getBytes(StandardCharsets.UTF_8);
             os.write(input, 0, input.length);
         }
         try {
@@ -102,7 +111,38 @@ public class SignUpController {
             error.setText("this email already have account");
             return false;
         }
+        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        String inputLine;
+        StringBuilder response = new StringBuilder();
+
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+        System.out.println("Response: " + response);
+        ReadyToGoToFeed(String.valueOf(response));
         return true;
+    }
+
+    static void ReadyToGoToFeed(String response) {
+        JSONObject jsonObject = new JSONObject(response);
+        String token = jsonObject.isNull("token") ? null : jsonObject.getString("token");
+        String firstName = jsonObject.isNull("firstName") ? null : jsonObject.getString("firstName");
+        String lastName = jsonObject.isNull("lastName") ? null : jsonObject.getString("lastName");
+        String country = jsonObject.isNull("country") ? null : jsonObject.getString("country");
+        String city = jsonObject.isNull("city") ? null : jsonObject.getString("city");
+        String additionalName = jsonObject.isNull("additionalName") ? null : jsonObject.getString("additionalName");
+        String email = jsonObject.isNull("email") ? null : jsonObject.getString("email");
+        String title = jsonObject.isNull("title") ? null : jsonObject.getString("title");
+        String profession = jsonObject.isNull("profession") ? null : jsonObject.getString("profession");
+        String imagePathProfile = jsonObject.isNull("imagePathProfile") ? null : jsonObject.getString("imagePathProfile");
+        String imagePathBackground = jsonObject.isNull("imagePathBackground") ? null : jsonObject.getString("imagePathBackground");
+        int jobId = jsonObject.isNull("jobId") ? null : jsonObject.getInt("jobId");
+        int educationId = jsonObject.isNull("educationId") ? null : jsonObject.getInt("educationId");
+        int connectionInfoId = jsonObject.isNull("connectionInfoId") ? null : jsonObject.getInt("connectionInfoId");
+        user = new User(firstName,lastName,additionalName , email , title , token , imagePathProfile,
+                imagePathBackground , jobId , educationId , connectionInfoId , country , city , profession);
+        LoginController.writeToFile(String.valueOf(token));
     }
 
     private void jsonToObjectOne(JsonObject jsonObject , String firstName , String lastName
@@ -111,6 +151,82 @@ public class SignUpController {
         jsonObject.addProperty("lastName" , lastName);
         jsonObject.addProperty("email" , email);
         jsonObject.addProperty("password" , password);
+    }
+
+    public void SSOLogin() throws URISyntaxException, IOException {
+        String clientId = "Ov23liNK8crEAR6uV5GD";
+        String redirectUri = "http://localhost:8888/callback";
+        String authUrl = "https://github.com/login/oauth/authorize"
+                + "?client_id=" + clientId
+                + "&redirect_uri=" + redirectUri
+                + "&scope=user";
+
+        Desktop.getDesktop().browse(new URI(authUrl));
+
+        System.out.println(LocalTime.now());
+        String response = RecieveRespond();
+        if (!response.equals("failed")){
+            ReadyToGoToFeed(response);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Sign up completed !");
+            alert.show();
+            goToFeedp(error);
+        };
+    }
+
+    static String RecieveRespond(){
+        String hostname = "localhost";  // Replace with the server's hostname or IP address
+        int port = 8887;  // Port number to connect to
+        int maxRetries = 10;  // Maximum number of retries
+        int retryCount = 0;  // Counter for retry attempts
+
+        while (retryCount < maxRetries) {
+            try {
+                // Attempt to create a socket and connect to the server
+                Socket socket = new Socket(hostname, port);
+                System.out.println("Connected to the server");
+
+                // If connected, handle communication here
+                InputStream input = socket.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+
+                String message = reader.readLine();
+                System.out.println("Message from server: " + message);
+
+
+                // Close the socket after communication
+                socket.close();
+                return message;
+               // Exit the loop once connected successfully
+
+            } catch (ConnectException e) {
+
+                retryCount++;
+                System.out.println("Connection failed. Retrying in 3 seconds... (" + retryCount + "/" + maxRetries + ")");
+
+                try {
+                    Thread.sleep(3000);  // Wait for 3 seconds before retrying
+                } catch (InterruptedException ie) {
+
+                    Thread.currentThread().interrupt();  // Reset the interrupt status
+                    System.out.println("Thread interrupted during sleep");
+
+                }
+
+
+            } catch (IOException e) {
+                System.out.println("Client exception: " + e.getMessage());
+                e.printStackTrace();
+                break;  // Exit the loop on other IOExceptions
+            }
+        }
+
+        if (retryCount == maxRetries) {
+            System.out.println("Unable to connect to the server after " + maxRetries + " attempts. Exiting.");
+            return "failed";
+        }
+
+        return "failed";
     }
 
 
