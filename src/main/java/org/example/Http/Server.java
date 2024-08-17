@@ -24,16 +24,18 @@ public class Server {
         //sign up -> POST
         //login -> GET
         //Profile -> GET & PUT
+        server.createContext("/post" , new PostHandler());
+        server.createContext("/user" , new UserHandler());
         server.createContext("/signup", new UserHandler());
         server.createContext("/login", new UserHandler());
         server.createContext("/search", new UserHandler());
         server.createContext("/profile", new ProfileHandler());
-        server.createContext("/post" , new PostHandler());
         server.createContext("/follow" , new FollowHandler());
         server.createContext("/connect" , new ConnectionHandler());
         server.createContext("/feed" , new FeedHandler());
         server.createContext("/like", new LikeHandler());
         server.createContext("/hashtag" , new HashtagHandler());
+        server.createContext("/callback" , new UserHandler());
 
         server.start();
     }
