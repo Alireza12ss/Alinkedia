@@ -5,6 +5,7 @@ import org.example.DataBaseHandler.UserDAO;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Post {
@@ -13,11 +14,32 @@ public class Post {
     int comments;
     int userId;
     String text;
-    Date date;
+    String date;
     String mediaPath;
-    Time time;
 
-    public Post(int postId, int likes, int comments,  int userId, String text, Date date, Time time , String mediaPath) {
+    public int getPostId() {
+        return postId;
+    }
+
+    public int getComments() {
+        return comments;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getMediaPath() {
+        return mediaPath;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    String time;
+
+    public Post(int postId, int likes, int comments,  int userId, String text, String date, String time , String mediaPath) {
         this.postId = postId;
         this.mediaPath = mediaPath;
         this.comments = comments;
@@ -40,18 +62,6 @@ public class Post {
         return text;
     }
 
-    private static String getName(int userId) throws SQLException {
-        User user = UserDAO.getUniqueUser(UserDAO.personEmail(userId));
-        return user.getFirstName() + " " + user.getLastName();
-    }
 
-    @Override
-    public String toString() {
-        try {
-            return mediaPath + "\n" + getName(userId) + "\nText : " + text + "\n" + likes + " like -  " + comments + "comment" +
-            "\n" +date + " - " + time + "\n-------------\n";
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 }

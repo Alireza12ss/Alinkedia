@@ -25,18 +25,5 @@ public class Comment {
         this.time = time;
     }
 
-    private static String getName(int userId) throws SQLException {
-        User user = UserDAO.getUniqueUser(UserDAO.personEmail(userId));
-        assert user != null;
-        return user.getFirstName() + " " + user.getLastName();
-    }
 
-    @Override
-    public String toString(){
-        try {
-            return mediaPath + "\n" + getName(userId) + "\n" + text + "\n" + date + " - " + time + "\n-------------\n";
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }
