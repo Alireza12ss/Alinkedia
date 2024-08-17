@@ -1,5 +1,6 @@
 package org.example.Handler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.example.Controller.CommentController;
@@ -7,15 +8,36 @@ import org.example.Controller.LikeController;
 import org.example.Controller.PostController;
 import org.example.DataBaseHandler.DAO;
 import org.example.DataBaseHandler.PostDAO;
+import org.example.DataBaseHandler.UserDAO;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.Objects;
 
+import static org.example.DataBaseHandler.DAO.personEmail;
 import static org.example.JWTgenerator.JwtGenerator.decodeToken;
 
 public class PostHandler implements HttpHandler {
+    private static int responseCodePostHandler ;
+    private static String responsePostHandler;
+
+    public static void setResponsePostHandler(String response) {
+        PostHandler.responsePostHandler = response;
+    }
+
+    public static String getResponse() {
+        return responsePostHandler;
+    }
+
+    public int getResponseCodePostHandler() {
+        return responseCodePostHandler;
+    }
+
+    public static void setResponseCodePostHandler(int responseCode) {
+        PostHandler.responseCodePostHandler = responseCode;
+    }
 
     public static String findHashtags(String hashtag) {
         return Objects.requireNonNull(PostDAO.findHashtags(hashtag)).toString();
@@ -26,11 +48,13 @@ public class PostHandler implements HttpHandler {
         PostController postController = new PostController();
         String method = exchange.getRequestMethod();
         String path = exchange.getRequestURI().getPath();
+        System.out.println(path);
         String response = "";
         String[] pathSplit = path.split("/");
         Map<String, Object> decoded = decodeToken(exchange.getRequestHeaders().getFirst("Authorization"));
         assert decoded != null;
         String Email = decoded.get("email").toString();
+        System.out.println(path);
         switch (method){
             case "GET" :
                 /*
@@ -47,6 +71,13 @@ public class PostHandler implements HttpHandler {
                     response = LikeController.postLike(Integer.valueOf(pathSplit[2]));
                 }else if (pathSplit.length == 4 && pathSplit[3].equals("comment")){
                     response = CommentController.getComments(Integer.valueOf(pathSplit[2]));
+                }else if (pathSplit.length == 4 && pathSplit[3].equals("user")){
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    try {
+                        response = objectMapper.writeValueAsString(UserDAO.getUniqueUser(personEmail(Integer.valueOf(pathSplit[2]))));
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 break;
             case "POST" :
@@ -68,7 +99,8 @@ public class PostHandler implements HttpHandler {
                 break;
 
         }
-        exchange.sendResponseHeaders(200, response.length());
+        System.out.println("okk" + response +"\n" + getResponseCodePostHandler());
+        exchange.sendResponseHeaders(getResponseCodePostHandler(), response.length());
         try (OutputStream outputStream = exchange.getResponseBody()) {
             outputStream.write(response.getBytes());
         } catch (IOException e) {

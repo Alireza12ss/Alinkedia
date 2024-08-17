@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.example.Controller.ConnectionController;
+import org.example.DataBaseHandler.ConnectionDAO;
 import org.json.JSONObject;
 
 import java.io.*;
@@ -12,6 +13,16 @@ import java.util.Map;
 import static org.example.JWTgenerator.JwtGenerator.decodeToken;
 
 public class ConnectionHandler implements HttpHandler {
+    static int responseCode;
+
+    public static int getResponseCode() {
+        return responseCode;
+    }
+
+    public static void setResponseCode(int responseCode) {
+        ConnectionHandler.responseCode = responseCode;
+    }
+
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         String method = exchange.getRequestMethod();
@@ -26,9 +37,13 @@ public class ConnectionHandler implements HttpHandler {
                     response = ConnectionController.AllConnections(Email);
                 }else if (pathSplit[2].equals("requested")){
                     response = ConnectionController.requestedConnections(Email);
+                }else if (pathSplit[2].equals("ask")){
+                    response = String.valueOf(ConnectionDAO.isConnected(Email , pathSplit[3]));
                 }
                 break;
             case "POST" :
+                // /connect
+                // /connect/accept
                 if (pathSplit.length == 2) {
                     JSONObject jsonObject = createJsonObject(exchange);
                     response = ConnectionController.sendRequest(Email, jsonObject.getString("receiverEmail"), jsonObject.getString("description"));
